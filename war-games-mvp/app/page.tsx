@@ -1,25 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
-
-// fake graph example
-const initialData = [
-  {
-    id: "austria_declares_war",
-    year: 1914,
-    text: "Austria-Hungary declares war on Serbia",
-    influences: ["ww1_begins"],
-  },
-  {
-    id: "ww1_begins",
-    year: 1914,
-    text: "World War I begins in Europe",
-    influences: [],
-  },
-];
+import React, { useState, useEffect } from "react";
 
 export default function Timeline() {
-  const [timeline, setTimeline] = useState(initialData);
+
+  const [timeline, setTimeline] = useState<any[]>([]);
+
+    // load actual data
+  useEffect(() => {
+    fetch("/data/wwi.json")
+      .then((res) => res.json())
+      .then((data) => setTimeline(data))
+      .catch((err) => console.error("failed to load wwi.json", err));
+  }, []);
 
   async function handleEdit(nodeId: string, newText: string) {
     // update node text

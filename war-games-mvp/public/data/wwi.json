@@ -1,937 +1,109 @@
-{
-  "nodes": {
-    "1914_sarajevo_assassination": {
-      "id": "1914_sarajevo_assassination",
-      "title": "Archduke Franz Ferdinand assassinated in Sarajevo",
-      "date": "1914-06-28",
-      "actors": [
-        "Austria-Hungary",
-        "Serbia",
-        "Gavrilo Princip"
-      ],
-      "state": {
-        "war_escalation": 0.9,
-        "political_stability": 0.3
-      }
-    },
-    "1914_july_ultimatum": {
-      "id": "1914_july_ultimatum",
-      "title": "Austria-Hungary issues ultimatum to Serbia",
-      "date": "1914-07-23",
-      "actors": [
-        "Austria-Hungary",
-        "Serbia"
-      ],
-      "state": {
-        "war_escalation": 0.8,
-        "alliances_cohesion": 0.6
-      }
-    },
-    "1914_russian_mobilization": {
-      "id": "1914_russian_mobilization",
-      "title": "Russia announces partial mobilization",
-      "date": "1914-07-29",
-      "actors": [
-        "Russia"
-      ],
-      "state": {
-        "mobilization_level": 0.7,
-        "war_escalation": 0.7
-      }
-    },
-    "1914_germany_declares_war_russia": {
-      "id": "1914_germany_declares_war_russia",
-      "title": "Germany declares war on Russia",
-      "date": "1914-08-01",
-      "actors": [
-        "Germany",
-        "Russia"
-      ],
-      "state": {
-        "mobilization_level": 1.0,
-        "war_escalation": 0.9
-      }
-    },
-    "1914_germany_invades_belgium": {
-      "id": "1914_germany_invades_belgium",
-      "title": "Germany invades Belgium; Schlieffen Plan in motion",
-      "date": "1914-08-04",
-      "actors": [
-        "Germany",
-        "Belgium"
-      ],
-      "state": {
-        "mobilization_level": 1.0,
-        "war_escalation": 1.0
-      }
-    },
-    "1914_britain_declares_war": {
-      "id": "1914_britain_declares_war",
-      "title": "Britain declares war on Germany",
-      "date": "1914-08-04",
-      "actors": [
-        "United Kingdom",
-        "Germany"
-      ],
-      "state": {
-        "alliances_cohesion": 0.9,
-        "war_escalation": 1.0
-      }
-    },
-    "1914_first_battle_marne": {
-      "id": "1914_first_battle_marne",
-      "title": "Allied counteroffensive at the Marne halts German advance",
-      "date": "1914-09-12",
-      "actors": [
-        "France",
-        "UK",
-        "Germany"
-      ],
-      "state": {
-        "casualties_expected": 50000,
-        "war_escalation": 0.9
-      }
-    },
-    "1914_race_to_sea": {
-      "id": "1914_race_to_sea",
-      "title": "Race to the Sea entrenches the Western Front",
-      "date": "1914-10-31",
-      "actors": [
-        "France",
-        "UK",
-        "Germany"
-      ],
-      "state": {
-        "logistics_capacity": 0.6,
-        "war_escalation": 0.8
-      }
-    },
-    "1914_christmas_truce": {
-      "id": "1914_christmas_truce",
-      "title": "Christmas Truce sees unofficial ceasefires along the front",
-      "date": "1914-12-25",
-      "actors": [
-        "France",
-        "UK",
-        "Germany"
-      ],
-      "state": {
-        "public_support": 0.5,
-        "war_escalation": 0.4
-      }
-    },
-    "1915_cl_t_gas_ypres": {
-      "id": "1915_cl_t_gas_ypres",
-      "title": "Chlorine gas first used at Second Ypres",
-      "date": "1915-04-22",
-      "actors": [
-        "Germany",
-        "Allies"
-      ],
-      "state": {
-        "war_escalation": 0.9,
-        "casualties_expected": 30000
-      }
-    },
-    "1915_gallipoli_landings": {
-      "id": "1915_gallipoli_landings",
-      "title": "Allied landings at Gallipoli open the Dardanelles front",
-      "date": "1915-04-25",
-      "actors": [
-        "UK",
-        "France",
-        "ANZAC",
-        "Ottoman Empire"
-      ],
-      "state": {
-        "logistics_capacity": 0.5,
-        "war_escalation": 0.8
-      }
-    },
-    "1915_italy_joins_entente": {
-      "id": "1915_italy_joins_entente",
-      "title": "Italy joins the Entente and declares war on Austria-Hungary",
-      "date": "1915-05-23",
-      "actors": [
-        "Italy",
-        "Austria-Hungary"
-      ],
-      "state": {
-        "alliances_cohesion": 0.8,
-        "war_escalation": 0.8
-      }
-    },
-    "1915_lusitania": {
-      "id": "1915_lusitania",
-      "title": "RMS Lusitania sunk by U-boat off Ireland",
-      "date": "1915-05-07",
-      "actors": [
-        "Germany",
-        "USA",
-        "UK"
-      ],
-      "state": {
-        "public_support": 0.6,
-        "war_escalation": 0.7
-      }
-    },
-    "1915_eastern_gorlice": {
-      "id": "1915_eastern_gorlice",
-      "title": "Gorlice\u2013Tarn\u00f3w Offensive breaks Russian lines",
-      "date": "1915-05-02",
-      "actors": [
-        "Germany",
-        "Austria-Hungary",
-        "Russia"
-      ],
-      "state": {
-        "mobilization_level": 0.9,
-        "casualties_expected": 40000
-      }
-    },
-    "1915_balkan_bulgaria_enters": {
-      "id": "1915_balkan_bulgaria_enters",
-      "title": "Bulgaria enters war on Central Powers side",
-      "date": "1915-10-14",
-      "actors": [
-        "Bulgaria",
-        "Serbia",
-        "Central Powers"
-      ],
-      "state": {
-        "alliances_cohesion": 0.7,
-        "war_escalation": 0.7
-      }
-    },
-    "1916_verdun": {
-      "id": "1916_verdun",
-      "title": "Battle of Verdun grinds on with massive losses",
-      "date": "1916-02-21",
-      "actors": [
-        "France",
-        "Germany"
-      ],
-      "state": {
-        "casualties_expected": 80000,
-        "war_escalation": 0.9
-      }
-    },
-    "1916_somme": {
-      "id": "1916_somme",
-      "title": "Allies launch the Somme offensive",
-      "date": "1916-07-01",
-      "actors": [
-        "UK",
-        "France",
-        "Germany"
-      ],
-      "state": {
-        "casualties_expected": 100000,
-        "war_escalation": 0.9
-      }
-    },
-    "1916_jutland": {
-      "id": "1916_jutland",
-      "title": "Battle of Jutland leaves British blockade intact",
-      "date": "1916-05-31",
-      "actors": [
-        "UK",
-        "Germany"
-      ],
-      "state": {
-        "logistics_capacity": 0.5,
-        "war_escalation": 0.7
-      }
-    },
-    "1916_brusilov": {
-      "id": "1916_brusilov",
-      "title": "Brusilov Offensive devastates Austro-Hungarian forces",
-      "date": "1916-06-04",
-      "actors": [
-        "Russia",
-        "Austria-Hungary"
-      ],
-      "state": {
-        "casualties_expected": 70000,
-        "war_escalation": 0.8
-      }
-    },
-    "1916_arab_revolt": {
-      "id": "1916_arab_revolt",
-      "title": "Arab Revolt erupts against Ottoman rule",
-      "date": "1916-06-10",
-      "actors": [
-        "Arab Forces",
-        "Ottoman Empire"
-      ],
-      "state": {
-        "political_stability": 0.4,
-        "war_escalation": 0.6
-      }
-    },
-    "1917_unrestricted_subwar": {
-      "id": "1917_unrestricted_subwar",
-      "title": "Germany resumes unrestricted submarine warfare",
-      "date": "1917-02-01",
-      "actors": [
-        "Germany",
-        "USA",
-        "UK"
-      ],
-      "state": {
-        "war_escalation": 0.9,
-        "public_support": 0.6
-      }
-    },
-    "1917_zimmermann": {
-      "id": "1917_zimmermann",
-      "title": "Zimmermann Telegram intercepted proposing alliance with Mexico",
-      "date": "1917-01-16",
-      "actors": [
-        "Germany",
-        "Mexico",
-        "UK",
-        "USA"
-      ],
-      "state": {
-        "intel_leak_risk": 1.0,
-        "public_support": 0.6
-      }
-    },
-    "1917_us_enters": {
-      "id": "1917_us_enters",
-      "title": "United States declares war on Germany",
-      "date": "1917-04-06",
-      "actors": [
-        "USA",
-        "Germany"
-      ],
-      "state": {
-        "logistics_capacity": 0.9,
-        "war_escalation": 0.8
-      }
-    },
-    "1917_feb_revolution": {
-      "id": "1917_feb_revolution",
-      "title": "February Revolution topples Russian monarchy",
-      "date": "1917-03-15",
-      "actors": [
-        "Russia"
-      ],
-      "state": {
-        "political_stability": 0.2,
-        "mobilization_level": 0.5
-      }
-    },
-    "1917_oct_revolution": {
-      "id": "1917_oct_revolution",
-      "title": "October Revolution brings Bolsheviks to power",
-      "date": "1917-11-07",
-      "actors": [
-        "Russia",
-        "Bolsheviks"
-      ],
-      "state": {
-        "political_stability": 0.1,
-        "mobilization_level": 0.3
-      }
-    },
-    "1917_passchendaele": {
-      "id": "1917_passchendaele",
-      "title": "Third Ypres (Passchendaele) bogs down in mud and attrition",
-      "date": "1917-07-31",
-      "actors": [
-        "UK",
-        "Germany",
-        "Allies"
-      ],
-      "state": {
-        "casualties_expected": 60000,
-        "war_escalation": 0.8
-      }
-    },
-    "1917_balfour": {
-      "id": "1917_balfour",
-      "title": "Balfour Declaration supports a national home for the Jewish people",
-      "date": "1917-11-02",
-      "actors": [
-        "UK"
-      ],
-      "state": {
-        "informational": 1.0,
-        "political_stability": 0.5
-      }
-    },
-    "1917_cambrai": {
-      "id": "1917_cambrai",
-      "title": "Tanks massed at Cambrai demonstrate new tactics",
-      "date": "1917-11-20",
-      "actors": [
-        "UK",
-        "Germany"
-      ],
-      "state": {
-        "technological": 1.0,
-        "logistics_capacity": 0.6
-      }
-    },
-    "1918_brest_litovsk": {
-      "id": "1918_brest_litovsk",
-      "title": "Treaty of Brest-Litovsk ends Russia's participation",
-      "date": "1918-03-03",
-      "actors": [
-        "Russia",
-        "Germany",
-        "Central Powers"
-      ],
-      "state": {
-        "mobilization_level": 0.2,
-        "alliances_cohesion": 0.6
-      }
-    },
-    "1918_spring_offensive": {
-      "id": "1918_spring_offensive",
-      "title": "Germany launches Spring Offensive on Western Front",
-      "date": "1918-03-21",
-      "actors": [
-        "Germany",
-        "Allies"
-      ],
-      "state": {
-        "mobilization_level": 1.0,
-        "war_escalation": 1.0,
-        "casualties_expected": 90000
-      }
-    },
-    "1918_hundred_days": {
-      "id": "1918_hundred_days",
-      "title": "Allies begin Hundred Days Offensive",
-      "date": "1918-08-08",
-      "actors": [
-        "Allies",
-        "Germany"
-      ],
-      "state": {
-        "mobilization_level": 1.0,
-        "war_escalation": 0.9,
-        "casualties_expected": 70000
-      }
-    },
-    "1918_bulgaria_armistice": {
-      "id": "1918_bulgaria_armistice",
-      "title": "Bulgaria signs armistice with Allies",
-      "date": "1918-09-29",
-      "actors": [
-        "Bulgaria",
-        "Allies"
-      ],
-      "state": {
-        "alliances_cohesion": 0.4,
-        "war_escalation": 0.3
-      }
-    },
-    "1918_ottoman_armistice": {
-      "id": "1918_ottoman_armistice",
-      "title": "Ottoman Empire signs Armistice of Mudros",
-      "date": "1918-10-30",
-      "actors": [
-        "Ottoman Empire",
-        "Allies"
-      ],
-      "state": {
-        "war_escalation": 0.2,
-        "political_stability": 0.4
-      }
-    },
-    "1918_austria_armistice": {
-      "id": "1918_austria_armistice",
-      "title": "Austria-Hungary signs armistice; empire dissolves",
-      "date": "1918-11-03",
-      "actors": [
-        "Austria-Hungary",
-        "Allies"
-      ],
-      "state": {
-        "war_escalation": 0.2,
-        "political_stability": 0.3
-      }
-    },
-    "1918_german_revolution": {
-      "id": "1918_german_revolution",
-      "title": "German Revolution forces Kaiser abdication",
-      "date": "1918-11-09",
-      "actors": [
-        "Germany"
-      ],
-      "state": {
-        "political_stability": 0.2,
-        "mobilization_level": 0.3
-      }
-    },
-    "1918_armistice_compiegne": {
-      "id": "1918_armistice_compiegne",
-      "title": "Armistice signed at Compi\u00e8gne; fighting ends",
-      "date": "1918-11-11",
-      "actors": [
-        "Germany",
-        "Allies"
-      ],
-      "state": {
-        "war_escalation": 0.0,
-        "mobilization_level": 0.2
-      }
-    },
-    "1918_spanish_flu": {
-      "id": "1918_spanish_flu",
-      "title": "Influenza pandemic spreads among troops and civilians",
-      "date": "1918-10-01",
-      "actors": [
-        "Global"
-      ],
-      "state": {
-        "public_support": 0.3,
-        "logistics_capacity": 0.5
-      }
-    },
-    "1919_versailles": {
-      "id": "1919_versailles",
-      "title": "Treaty of Versailles imposes terms on Germany",
-      "date": "1919-06-28",
-      "actors": [
-        "Allies",
-        "Germany"
-      ],
-      "state": {
-        "political_stability": 0.4,
-        "alliances_cohesion": 0.6
-      }
-    },
-    "1919_league_of_nations": {
-      "id": "1919_league_of_nations",
-      "title": "League of Nations established",
-      "date": "1919-01-10",
-      "actors": [
-        "International"
-      ],
-      "state": {
-        "political_stability": 0.5,
-        "informational": 0.7
-      }
-    },
-    "1915_armenian_events": {
-      "id": "1915_armenian_events",
-      "title": "Ottoman authorities deport Armenians amid mass deaths",
-      "date": "1915-04-24",
-      "actors": [
-        "Ottoman Empire",
-        "Armenians"
-      ],
-      "state": {
-        "public_support": 0.4,
-        "war_escalation": 0.7
-      }
-    },
-    "1916_romania_enters": {
-      "id": "1916_romania_enters",
-      "title": "Romania enters war on Allied side; Central Powers counterattack",
-      "date": "1916-08-27",
-      "actors": [
-        "Romania",
-        "Allies",
-        "Central Powers"
-      ],
-      "state": {
-        "alliances_cohesion": 0.6,
-        "war_escalation": 0.7
-      }
-    },
-    "1917_lenin_returns": {
-      "id": "1917_lenin_returns",
-      "title": "Lenin returns to Petrograd via sealed train",
-      "date": "1917-04-16",
-      "actors": [
-        "Russia",
-        "Lenin"
-      ],
-      "state": {
-        "political_stability": 0.3,
-        "informational": 0.6
-      }
-    },
-    "1915_zeppelins_london": {
-      "id": "1915_zeppelins_london",
-      "title": "Zeppelin raids strike London",
-      "date": "1915-05-31",
-      "actors": [
-        "Germany",
-        "UK"
-      ],
-      "state": {
-        "public_support": 0.6,
-        "war_escalation": 0.7
-      }
-    },
-    "1914_tannenberg": {
-      "id": "1914_tannenberg",
-      "title": "German victory at Tannenberg on Eastern Front",
-      "date": "1914-08-30",
-      "actors": [
-        "Germany",
-        "Russia"
-      ],
-      "state": {
-        "mobilization_level": 0.9,
-        "casualties_expected": 40000
-      }
-    },
-    "1915_serbia_falls": {
-      "id": "1915_serbia_falls",
-      "title": "Central Powers overrun Serbia; retreat through Albania",
-      "date": "1915-12-01",
-      "actors": [
-        "Serbia",
-        "Central Powers"
-      ],
-      "state": {
-        "alliances_cohesion": 0.6,
-        "public_support": 0.5
-      }
-    },
-    "1916_falkenhayn_replaced": {
-      "id": "1916_falkenhayn_replaced",
-      "title": "Hindenburg and Ludendorff take command of German war effort",
-      "date": "1916-08-29",
-      "actors": [
-        "Germany"
-      ],
-      "state": {
-        "logistics_capacity": 0.7,
-        "mobilization_level": 0.8
-      }
-    },
-    "1917_convoy_system": {
-      "id": "1917_convoy_system",
-      "title": "Allies adopt convoy system to counter U-boats",
-      "date": "1917-05-10",
-      "actors": [
-        "Allies",
-        "UK",
-        "USA"
-      ],
-      "state": {
-        "logistics_capacity": 0.8,
-        "public_support": 0.6
-      }
-    },
-    "1918_ludendorff_appeal": {
-      "id": "1918_ludendorff_appeal",
-      "title": "Ludendorff urges immediate armistice as situation deteriorates",
-      "date": "1918-10-01",
-      "actors": [
-        "Germany"
-      ],
-      "state": {
-        "political_stability": 0.3,
-        "war_escalation": 0.2
-      }
-    },
-    "1918_wilsons_fourteen": {
-      "id": "1918_wilsons_fourteen",
-      "title": "Wilson announces Fourteen Points",
-      "date": "1918-01-08",
-      "actors": [
-        "USA"
-      ],
-      "state": {
-        "informational": 0.8,
-        "public_support": 0.6
-      }
-    }
-  },
-  "edges": [
-    {
-      "src": "1914_sarajevo_assassination",
-      "dst": "1914_july_ultimatum",
-      "weight": 0.9,
-      "mechanism": "informational"
-    },
-    {
-      "src": "1914_july_ultimatum",
-      "dst": "1914_russian_mobilization",
-      "weight": 0.6,
-      "mechanism": "diplomatic"
-    },
-    {
-      "src": "1914_russian_mobilization",
-      "dst": "1914_germany_declares_war_russia",
-      "weight": 0.8,
-      "mechanism": "military"
-    },
-    {
-      "src": "1914_germany_declares_war_russia",
-      "dst": "1914_germany_invades_belgium",
-      "weight": 0.6,
-      "mechanism": "military"
-    },
-    {
-      "src": "1914_germany_invades_belgium",
-      "dst": "1914_britain_declares_war",
-      "weight": 0.9,
-      "mechanism": "diplomatic"
-    },
-    {
-      "src": "1914_germany_invades_belgium",
-      "dst": "1914_first_battle_marne",
-      "weight": 0.7,
-      "mechanism": "military"
-    },
-    {
-      "src": "1914_first_battle_marne",
-      "dst": "1914_race_to_sea",
-      "weight": 0.6,
-      "mechanism": "military"
-    },
-    {
-      "src": "1914_race_to_sea",
-      "dst": "1914_christmas_truce",
-      "weight": 0.4,
-      "mechanism": "informational"
-    },
-    {
-      "src": "1914_race_to_sea",
-      "dst": "1915_cl_t_gas_ypres",
-      "weight": 0.4,
-      "mechanism": "technological"
-    },
-    {
-      "src": "1915_gallipoli_landings",
-      "dst": "1916_arab_revolt",
-      "weight": 0.4,
-      "mechanism": "informational"
-    },
-    {
-      "src": "1915_lusitania",
-      "dst": "1917_us_enters",
-      "weight": 0.4,
-      "mechanism": "informational"
-    },
-    {
-      "src": "1915_lusitania",
-      "dst": "1917_unrestricted_subwar",
-      "weight": 0.3,
-      "mechanism": "informational"
-    },
-    {
-      "src": "1915_italy_joins_entente",
-      "dst": "1916_somme",
-      "weight": 0.3,
-      "mechanism": "diplomatic"
-    },
-    {
-      "src": "1915_eastern_gorlice",
-      "dst": "1916_brusilov",
-      "weight": 0.5,
-      "mechanism": "military"
-    },
-    {
-      "src": "1915_balkan_bulgaria_enters",
-      "dst": "1915_serbia_falls",
-      "weight": 0.7,
-      "mechanism": "military"
-    },
-    {
-      "src": "1915_zeppelins_london",
-      "dst": "1917_convoy_system",
-      "weight": 0.3,
-      "mechanism": "informational"
-    },
-    {
-      "src": "1916_verdun",
-      "dst": "1916_somme",
-      "weight": 0.4,
-      "mechanism": "military"
-    },
-    {
-      "src": "1916_jutland",
-      "dst": "1917_unrestricted_subwar",
-      "weight": 0.6,
-      "mechanism": "economic"
-    },
-    {
-      "src": "1916_brusilov",
-      "dst": "1917_feb_revolution",
-      "weight": 0.4,
-      "mechanism": "informational"
-    },
-    {
-      "src": "1916_romania_enters",
-      "dst": "1916_brusilov",
-      "weight": 0.3,
-      "mechanism": "diplomatic"
-    },
-    {
-      "src": "1916_falkenhayn_replaced",
-      "dst": "1917_unrestricted_subwar",
-      "weight": 0.3,
-      "mechanism": "informational"
-    },
-    {
-      "src": "1917_zimmermann",
-      "dst": "1917_us_enters",
-      "weight": 0.7,
-      "mechanism": "informational"
-    },
-    {
-      "src": "1917_unrestricted_subwar",
-      "dst": "1917_us_enters",
-      "weight": 0.6,
-      "mechanism": "informational"
-    },
-    {
-      "src": "1917_feb_revolution",
-      "dst": "1917_oct_revolution",
-      "weight": 0.6,
-      "mechanism": "informational"
-    },
-    {
-      "src": "1917_lenin_returns",
-      "dst": "1917_oct_revolution",
-      "weight": 0.6,
-      "mechanism": "informational"
-    },
-    {
-      "src": "1917_oct_revolution",
-      "dst": "1918_brest_litovsk",
-      "weight": 0.9,
-      "mechanism": "diplomatic"
-    },
-    {
-      "src": "1917_convoy_system",
-      "dst": "1918_hundred_days",
-      "weight": 0.3,
-      "mechanism": "informational"
-    },
-    {
-      "src": "1918_brest_litovsk",
-      "dst": "1918_spring_offensive",
-      "weight": 0.8,
-      "mechanism": "military"
-    },
-    {
-      "src": "1918_spring_offensive",
-      "dst": "1918_hundred_days",
-      "weight": 0.6,
-      "mechanism": "military"
-    },
-    {
-      "src": "1918_hundred_days",
-      "dst": "1918_bulgaria_armistice",
-      "weight": 0.7,
-      "mechanism": "military"
-    },
-    {
-      "src": "1918_bulgaria_armistice",
-      "dst": "1918_ottoman_armistice",
-      "weight": 0.5,
-      "mechanism": "diplomatic"
-    },
-    {
-      "src": "1918_ottoman_armistice",
-      "dst": "1918_austria_armistice",
-      "weight": 0.5,
-      "mechanism": "diplomatic"
-    },
-    {
-      "src": "1918_austria_armistice",
-      "dst": "1918_german_revolution",
-      "weight": 0.5,
-      "mechanism": "informational"
-    },
-    {
-      "src": "1918_german_revolution",
-      "dst": "1918_armistice_compiegne",
-      "weight": 0.9,
-      "mechanism": "diplomatic"
-    },
-    {
-      "src": "1918_ludendorff_appeal",
-      "dst": "1918_armistice_compiegne",
-      "weight": 0.7,
-      "mechanism": "informational"
-    },
-    {
-      "src": "1918_wilsons_fourteen",
-      "dst": "1918_armistice_compiegne",
-      "weight": 0.4,
-      "mechanism": "informational"
-    },
-    {
-      "src": "1918_armistice_compiegne",
-      "dst": "1919_versailles",
-      "weight": 0.8,
-      "mechanism": "diplomatic"
-    },
-    {
-      "src": "1919_league_of_nations",
-      "dst": "1919_versailles",
-      "weight": 0.5,
-      "mechanism": "informational"
-    },
-    {
-      "src": "1914_tannenberg",
-      "dst": "1915_eastern_gorlice",
-      "weight": 0.4,
-      "mechanism": "military"
-    },
-    {
-      "src": "1915_gallipoli_landings",
-      "dst": "1917_balfour",
-      "weight": 0.3,
-      "mechanism": "informational"
-    },
-    {
-      "src": "1916_arab_revolt",
-      "dst": "1918_ottoman_armistice",
-      "weight": 0.5,
-      "mechanism": "military"
-    },
-    {
-      "src": "1915_armenian_events",
-      "dst": "1919_versailles",
-      "weight": 0.2,
-      "mechanism": "informational"
-    },
-    {
-      "src": "1918_spanish_flu",
-      "dst": "1919_versailles",
-      "weight": 0.2,
-      "mechanism": "informational"
-    }
-  ],
-  "goals": [
-    {
-      "id": "prevent_us_entry",
-      "name": "Keep the US neutral",
-      "description": "Avoid a formal US declaration of war by 1918-12-31.",
-      "metrics": [
-        {
-          "key": "public_support",
-          "target": 0.3,
-          "weight": 0.5,
-          "direction": "min"
-        },
-        {
-          "key": "casualties_expected",
-          "target": 20000,
-          "weight": 0.3,
-          "direction": "min"
-        },
-        {
-          "key": "end_by_date",
-          "target": "1918-12-31",
-          "weight": 0.2
-        }
-      ]
-    }
-  ]
-}
+[
+  { "id": "1910_union_of_south_africa", "year": 1910, "text": "Union of South Africa formed within the British Empire", "influences": [] },
+  { "id": "1910_dreadnought_race_intensifies", "year": 1910, "text": "Anglo–German dreadnought naval race intensifies", "influences": [] },
+  { "id": "1911_agadir_crisis", "year": 1911, "text": "Second Moroccan (Agadir) Crisis heightens great-power tensions", "influences": ["1910_dreadnought_race_intensifies"] },
+  { "id": "1911_italo_turkish_war", "year": 1911, "text": "Italy defeats Ottoman Empire and seizes Libya", "influences": [] },
+  { "id": "1912_balkan_league_formed", "year": 1912, "text": "Balkan League formed by Serbia, Bulgaria, Greece, Montenegro", "influences": ["1911_italo_turkish_war"] },
+  { "id": "1912_first_balkan_war_begins", "year": 1912, "text": "First Balkan War erupts against the Ottoman Empire", "influences": ["1912_balkan_league_formed"] },
+  { "id": "1912_titanic_sinks", "year": 1912, "text": "RMS Titanic sinks in North Atlantic", "influences": [] },
+  { "id": "1913_treaty_of_london", "year": 1913, "text": "Treaty of London ends First Balkan War, redraws borders", "influences": ["1912_first_balkan_war_begins"] },
+  { "id": "1913_second_balkan_war_begins", "year": 1913, "text": "Second Balkan War breaks out among former allies", "influences": ["1913_treaty_of_london"] },
+  { "id": "1913_treaty_of_bucharest", "year": 1913, "text": "Treaty of Bucharest ends Second Balkan War", "influences": ["1913_second_balkan_war_begins"] },
+  { "id": "1913_serbian_nationalism_surges", "year": 1913, "text": "Post-Balkan Wars Serbian nationalism surges", "influences": ["1913_treaty_of_bucharest"] },
+  { "id": "1913_german_army_bill", "year": 1913, "text": "Germany passes Army Bill expanding land forces", "influences": ["1910_dreadnought_race_intensifies","1911_agadir_crisis"] },
+  { "id": "1914_goeben_breslau_to_constantinople", "year": 1914, "text": "German cruisers Goeben and Breslau reach Constantinople", "influences": ["1911_italo_turkish_war"] },
+  { "id": "1914_panama_canal_opens", "year": 1914, "text": "Panama Canal opens to world shipping", "influences": [] },
+
+  { "id": "1914_sarajevo_assassination", "year": 1914, "text": "Archduke Franz Ferdinand assassinated in Sarajevo", "influences": ["1913_serbian_nationalism_surges"] },
+  { "id": "1914_july_ultimatum", "year": 1914, "text": "Austria-Hungary issues harsh ultimatum to Serbia", "influences": ["1914_sarajevo_assassination"] },
+  { "id": "1914_austria_declares_war_serbia", "year": 1914, "text": "Austria-Hungary declares war on Serbia", "influences": ["1914_july_ultimatum"] },
+  { "id": "1914_russian_partial_mobilization", "year": 1914, "text": "Russia orders partial mobilization to support Serbia", "influences": ["1914_austria_declares_war_serbia"] },
+  { "id": "1914_russian_full_mobilization", "year": 1914, "text": "Russia moves to full mobilization", "influences": ["1914_russian_partial_mobilization"] },
+  { "id": "1914_germany_declares_war_russia", "year": 1914, "text": "Germany declares war on Russia", "influences": ["1914_russian_full_mobilization","1913_german_army_bill"] },
+  { "id": "1914_germany_declares_war_france", "year": 1914, "text": "Germany declares war on France", "influences": ["1914_germany_declares_war_russia"] },
+  { "id": "1914_german_invasion_belgium", "year": 1914, "text": "Germany invades neutral Belgium (Schlieffen Plan)", "influences": ["1914_germany_declares_war_france"] },
+  { "id": "1914_britain_declares_war_germany", "year": 1914, "text": "Britain declares war on Germany over Belgium", "influences": ["1914_german_invasion_belgium"] },
+  { "id": "1914_battle_of_the_frontiers", "year": 1914, "text": "Battle of the Frontiers on the Western Front", "influences": ["1914_germany_declares_war_france"] },
+  { "id": "1914_tannenberg", "year": 1914, "text": "German victory at Tannenberg over Russia", "influences": ["1914_germany_declares_war_russia"] },
+  { "id": "1914_masurian_lakes_i", "year": 1914, "text": "First Battle of the Masurian Lakes", "influences": ["1914_tannenberg"] },
+  { "id": "1914_first_marne", "year": 1914, "text": "First Battle of the Marne halts the German advance", "influences": ["1914_battle_of_the_frontiers","1914_german_invasion_belgium"] },
+  { "id": "1914_race_to_the_sea", "year": 1914, "text": "Race to the Sea extends the trench lines to the coast", "influences": ["1914_first_marne"] },
+  { "id": "1914_first_ypres", "year": 1914, "text": "First Battle of Ypres; trenches harden in the West", "influences": ["1914_race_to_the_sea"] },
+  { "id": "1914_ottoman_enters_war", "year": 1914, "text": "Ottoman Empire enters war on Central Powers' side", "influences": ["1914_goeben_breslau_to_constantinople"] },
+  { "id": "1914_tsingtao_falls", "year": 1914, "text": "Japanese and British forces capture Tsingtao", "influences": ["1914_britain_declares_war_germany"] },
+  { "id": "1914_german_colonies_pacific_lost", "year": 1914, "text": "Allies seize most German Pacific colonies", "influences": ["1914_britain_declares_war_germany"] },
+  { "id": "1914_indian_and_canadian_contingents", "year": 1914, "text": "Dominion forces mobilize for the Western Front", "influences": ["1914_britain_declares_war_germany"] },
+
+  { "id": "1915_masurian_lakes_ii", "year": 1915, "text": "Second Battle of the Masurian Lakes", "influences": ["1914_masurian_lakes_i"] },
+  { "id": "1915_dardanelles_naval_attempt", "year": 1915, "text": "Allied naval attempt to force the Dardanelles", "influences": ["1914_ottoman_enters_war"] },
+  { "id": "1915_gallipoli_landings", "year": 1915, "text": "Allied landings at Gallipoli", "influences": ["1915_dardanelles_naval_attempt"] },
+  { "id": "1915_poison_gas_ypres", "year": 1915, "text": "Chlorine gas first used at Second Ypres", "influences": ["1914_first_ypres"] },
+  { "id": "1915_gorlice_tarnow", "year": 1915, "text": "Gorlice–Tarnów Offensive breaks Russian front", "influences": ["1914_tannenberg","1915_masurian_lakes_ii"] },
+  { "id": "1915_lusitania_sunk", "year": 1915, "text": "U-boat sinks RMS Lusitania off Ireland", "influences": ["1914_britain_declares_war_germany"] },
+  { "id": "1915_italy_joins_entente", "year": 1915, "text": "Italy enters war against Austria-Hungary", "influences": ["1913_treaty_of_bucharest","1911_agadir_crisis"] },
+  { "id": "1915_zeppelins_over_london", "year": 1915, "text": "Zeppelin bombing raids reach London", "influences": ["1910_dreadnought_race_intensifies"] },
+  { "id": "1915_bulgaria_joins_central_powers", "year": 1915, "text": "Bulgaria joins Central Powers; Serbia invaded", "influences": ["1913_treaty_of_bucharest","1915_gorlice_tarnow"] },
+  { "id": "1915_mcmahon_hussein_correspondence", "year": 1915, "text": "McMahon–Hussein correspondence begins", "influences": ["1914_ottoman_enters_war"] },
+  { "id": "1915_serbia_falls", "year": 1915, "text": "Central Powers overrun Serbia; retreat through Albania", "influences": ["1915_bulgaria_joins_central_powers"] },
+  { "id": "1915_gallipoli_evacuation", "year": 1915, "text": "Allies begin evacuation of Gallipoli", "influences": ["1915_gallipoli_landings"] },
+
+  { "id": "1916_verdun_begins", "year": 1916, "text": "Battle of Verdun opens; attrition strategy", "influences": ["1914_first_ypres"] },
+  { "id": "1916_jutland", "year": 1916, "text": "Battle of Jutland leaves British blockade intact", "influences": ["1910_dreadnought_race_intensifies"] },
+  { "id": "1916_somme_begins", "year": 1916, "text": "Allies launch the Somme offensive", "influences": ["1916_verdun_begins"] },
+  { "id": "1916_easter_rising", "year": 1916, "text": "Easter Rising challenges British rule in Ireland", "influences": ["1914_britain_declares_war_germany"] },
+  { "id": "1916_brusilov_offensive", "year": 1916, "text": "Brusilov Offensive devastates Austro-Hungarian army", "influences": ["1915_gorlice_tarnow"] },
+  { "id": "1916_romania_enters_war", "year": 1916, "text": "Romania joins Allies; Central Powers counterattack", "influences": ["1916_brusilov_offensive","1915_serbia_falls"] },
+  { "id": "1916_arab_revolt_begins", "year": 1916, "text": "Arab Revolt erupts against Ottoman rule", "influences": ["1915_mcmahon_hussein_correspondence"] },
+  { "id": "1916_falkenhayn_replaced", "year": 1916, "text": "Hindenburg and Ludendorff take control of German war effort", "influences": ["1916_verdun_begins","1916_somme_begins"] },
+  { "id": "1916_hindenburg_program", "year": 1916, "text": "Germany launches the Hindenburg industrial program", "influences": ["1916_falkenhayn_replaced"] },
+  { "id": "1916_sykes_picot", "year": 1916, "text": "Sykes–Picot Agreement secretly partitions Ottoman Arab lands", "influences": ["1916_arab_revolt_begins"] },
+  { "id": "1916_bucharest_falls", "year": 1916, "text": "Central Powers capture Bucharest", "influences": ["1916_romania_enters_war"] },
+
+  { "id": "1917_unrestricted_subwar", "year": 1917, "text": "Germany resumes unrestricted submarine warfare", "influences": ["1916_jutland","1916_hindenburg_program"] },
+  { "id": "1917_zimmermann_telegram", "year": 1917, "text": "Zimmermann Telegram proposes alliance with Mexico", "influences": ["1917_unrestricted_subwar"] },
+  { "id": "1917_us_declares_war", "year": 1917, "text": "United States declares war on Germany", "influences": ["1915_lusitania_sunk","1917_unrestricted_subwar","1917_zimmermann_telegram"] },
+  { "id": "1917_us_selective_service", "year": 1917, "text": "US enacts Selective Service; mobilization begins", "influences": ["1917_us_declares_war"] },
+  { "id": "1917_convoy_system", "year": 1917, "text": "Allies adopt convoy system to counter U-boats", "influences": ["1917_unrestricted_subwar"] },
+  { "id": "1917_february_revolution", "year": 1917, "text": "February Revolution topples the Russian monarchy", "influences": ["1916_brusilov_offensive","1916_hindenburg_program"] },
+  { "id": "1917_kerensky_offensive", "year": 1917, "text": "Kerensky Offensive collapses, deepening Russian crisis", "influences": ["1917_february_revolution"] },
+  { "id": "1917_passchendaele", "year": 1917, "text": "Third Ypres (Passchendaele) grinds into attrition", "influences": ["1916_somme_begins","1916_verdun_begins"] },
+  { "id": "1917_cambrai_tanks", "year": 1917, "text": "Tanks massed at Cambrai demonstrate new tactics", "influences": ["1916_somme_begins"] },
+  { "id": "1917_balfour_declaration", "year": 1917, "text": "Balfour Declaration backs a national home for the Jewish people", "influences": ["1916_sykes_picot","1916_arab_revolt_begins"] },
+  { "id": "1917_october_revolution", "year": 1917, "text": "Bolsheviks seize power in Petrograd", "influences": ["1917_february_revolution","1917_kerensky_offensive"] },
+  { "id": "1917_russo_german_armistice", "year": 1917, "text": "Armistice on Eastern Front after Bolshevik peace decree", "influences": ["1917_october_revolution"] },
+  { "id": "1917_finland_independence", "year": 1917, "text": "Finland declares independence from Russia", "influences": ["1917_october_revolution"] },
+
+  { "id": "1918_treaty_brest_litovsk", "year": 1918, "text": "Treaty of Brest-Litovsk takes Russia out of the war", "influences": ["1917_russo_german_armistice","1917_october_revolution"] },
+  { "id": "1918_german_spring_offensive", "year": 1918, "text": "Germany launches Spring Offensive in the West", "influences": ["1918_treaty_brest_litovsk","1916_hindenburg_program"] },
+  { "id": "1918_second_marne", "year": 1918, "text": "Allied counteroffensive at Second Marne turns the tide", "influences": ["1918_german_spring_offensive","1917_us_selective_service"] },
+  { "id": "1918_hundred_days", "year": 1918, "text": "Allies begin Hundred Days Offensive", "influences": ["1918_second_marne","1917_convoy_system","1917_us_declares_war"] },
+  { "id": "1918_amiens", "year": 1918, "text": "Battle of Amiens breaks German lines ('black day' for German Army)", "influences": ["1918_hundred_days"] },
+  { "id": "1918_bulgaria_armistice", "year": 1918, "text": "Bulgaria signs armistice", "influences": ["1918_hundred_days"] },
+  { "id": "1918_mudros_armistice", "year": 1918, "text": "Ottoman Empire signs Armistice of Mudros", "influences": ["1916_arab_revolt_begins","1918_hundred_days"] },
+  { "id": "1918_villa_giusti", "year": 1918, "text": "Austria-Hungary signs Armistice of Villa Giusti", "influences": ["1916_brusilov_offensive","1918_hundred_days"] },
+  { "id": "1918_german_naval_mutiny", "year": 1918, "text": "German naval mutiny triggers wider revolution", "influences": ["1918_hundred_days","1916_hindenburg_program"] },
+  { "id": "1918_german_revolution", "year": 1918, "text": "German Revolution forces Kaiser’s abdication", "influences": ["1918_german_naval_mutiny"] },
+  { "id": "1918_armistice_compiegne", "year": 1918, "text": "Armistice signed at Compiègne ends fighting", "influences": ["1918_german_revolution","1918_hundred_days"] },
+  { "id": "1918_czechoslovakia_independence", "year": 1918, "text": "Czechoslovakia declares independence", "influences": ["1918_villa_giusti"] },
+  { "id": "1918_yugoslavia_formed", "year": 1918, "text": "Kingdom of Serbs, Croats, and Slovenes proclaimed", "influences": ["1918_villa_giusti","1915_serbia_falls"] },
+  { "id": "1918_spanish_flu_wave_two", "year": 1918, "text": "Second wave of influenza pandemic devastates populations", "influences": ["1917_convoy_system"] },
+
+  { "id": "1919_paris_peace_conference", "year": 1919, "text": "Paris Peace Conference convenes to settle the war", "influences": ["1918_armistice_compiegne","1918_czechoslovakia_independence","1918_yugoslavia_formed"] },
+  { "id": "1919_spartacist_uprising", "year": 1919, "text": "Spartacist uprising crushed in Germany", "influences": ["1918_german_revolution"] },
+  { "id": "1919_weimar_constitution", "year": 1919, "text": "Weimar Constitution adopted", "influences": ["1918_german_revolution","1919_spartacist_uprising"] },
+  { "id": "1919_versailles_treaty_signed", "year": 1919, "text": "Treaty of Versailles signed with Germany", "influences": ["1919_paris_peace_conference"] },
+  { "id": "1919_league_of_nations_established", "year": 1919, "text": "League of Nations established", "influences": ["1919_paris_peace_conference","1919_versailles_treaty_signed"] },
+  { "id": "1919_saint_germain", "year": 1919, "text": "Treaty of Saint-Germain with Austria", "influences": ["1919_paris_peace_conference","1918_villa_giusti"] },
+  { "id": "1919_fiume_d_annunzio", "year": 1919, "text": "D’Annunzio occupies Fiume (Rijeka)", "influences": ["1918_villa_giusti","1919_saint_germain"] },
+  { "id": "1919_polish_silesian_uprising_i", "year": 1919, "text": "First Silesian Uprising erupts in Upper Silesia", "influences": ["1919_paris_peace_conference"] },
+  { "id": "1919_egyptian_revolution", "year": 1919, "text": "Egyptian Revolution challenges British rule", "influences": ["1919_league_of_nations_established"] },
+  { "id": "1919_spanish_flu_third_wave", "year": 1919, "text": "Third wave of influenza continues global toll", "influences": ["1918_spanish_flu_wave_two"] },
+
+  { "id": "1920_league_first_assembly", "year": 1920, "text": "League of Nations holds first Assembly", "influences": ["1919_league_of_nations_established"] },
+  { "id": "1920_san_remo_conference", "year": 1920, "text": "San Remo Conference assigns Middle East mandates", "influences": ["1916_sykes_picot","1919_league_of_nations_established","1918_mudros_armistice"] },
+  { "id": "1920_treaty_trianon", "year": 1920, "text": "Treaty of Trianon with Hungary", "influences": ["1919_paris_peace_conference","1919_saint_germain"] },
+  { "id": "1920_treaty_sevres", "year": 1920, "text": "Treaty of Sèvres with the Ottoman Empire", "influences": ["1920_san_remo_conference","1918_mudros_armistice"] },
+  { "id": "1920_free_city_danzig", "year": 1920, "text": "Free City of Danzig established under League oversight", "influences": ["1919_versailles_treaty_signed","1920_league_first_assembly"] },
+  { "id": "1920_us_rejects_versailles", "year": 1920, "text": "US Senate rejects Treaty of Versailles and League entry", "influences": ["1919_versailles_treaty_signed","1919_league_of_nations_established"] },
+  { "id": "1920_prohibition_begins_us", "year": 1920, "text": "Prohibition takes effect in the United States (Volstead Act)", "influences": ["1917_us_declares_war"] }
+]
