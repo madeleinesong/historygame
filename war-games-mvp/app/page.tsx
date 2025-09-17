@@ -15,6 +15,7 @@ import ReactFlow, {
 } from "reactflow";
 import "reactflow/dist/style.css";
 import ELK from "elkjs";
+import EditableNode from "./EditableNode";
 
 type EventNode = { id: string; year: number; text: string; influences: string[] };
 type Objective = { id: string; title: string; initialFocusId?: string };
@@ -26,7 +27,7 @@ async function dagLayout(nodes: Node[], edges: Edge[]) {
     id: "root",
     layoutOptions: {
       "elk.algorithm": "layered",
-      "elk.direction": "RIGHT",
+      "elk.direction": "UP",
       "elk.layered.spacing.nodeNodeBetweenLayers": "120",
       "elk.spacing.edgeNode": "50",
       "elk.spacing.nodeNode": "50",
@@ -34,26 +35,30 @@ async function dagLayout(nodes: Node[], edges: Edge[]) {
     },
     children: nodes.map((n) => ({
       id: n.id,
-      width: Math.max(280, (n.data?.label as string)?.length * 4 || 280),
+      width: 320,
       height: 84,
     })),
     edges: edges.map((e) => ({ id: e.id, sources: [e.source!], targets: [e.target!] })),
   };
 
   const res = await elk.layout(graph);
-  const pos = Object.fromEntries((res.children || []).map((c: any) => [c.id, { x: c.x ?? 0, y: c.y ?? 0 }]));
+  const pos = Object.fromEntries(
+    (res.children || []).map((c: any) => [c.id, { x: c.x ?? 0, y: c.y ?? 0 }])
+  );
   return {
-    nodes: nodes.map((n) => ({ ...n, position: pos[n.id] ?? n.position, draggable: true })),
+    nodes: nodes.map((n) => ({
+      ...n,
+      position: pos[n.id] ?? n.position,
+      draggable: true,
+    })),
     edges,
   };
 }
 
 export default function Page() {
   const [timeline, setTimeline] = useState<EventNode[]>([]);
-  const [objective, setObjective] = useState<Objective | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // load WW2 data at /public/data/ww2.json (object: { objective, nodes })
   useEffect(() => {
     (async () => {
       try {
@@ -61,29 +66,34 @@ export default function Page() {
         const data = await res.json();
         if (Array.isArray(data)) {
           setTimeline(data);
-          setObjective(null);
         } else {
           setTimeline(Array.isArray(data.nodes) ? data.nodes : []);
-          setObjective(data.objective ?? null);
         }
       } catch (e) {
-        console.error("failed to load /data/ww2.json", e);
+        console.error("failed to load /data/wwii.json", e);
       } finally {
         setLoading(false);
       }
     })();
   }, []);
 
+  const objective = {
+    id: "prevent_atomic_bomb_use",
+    title: "Prevent the nuclear bomb from dropping",
+    initialFocusId: "1945_hiroshima_bombing",
+  };
+
   if (loading) return <div style={{ padding: 16 }}>loading…</div>;
 
   return (
-    <div style={{ width: "100%", height: "100vh", background: "#0a0a0b" }}>
-      {/* objective banner */}
-      <ObjectiveBar objective={objective} />
-      {/* provider fixes the zustand error */}
-      <ReactFlowProvider>
-        <GraphCanvas timeline={timeline} objective={objective || undefined} />
-      </ReactFlowProvider>
+    <div className="w-screen h-screen overflow-hidden bg-gray-100">
+      <div className="fixed top-0 left-0 w-full bg-black shadow-md z-20 px-6 py-3" />
+      <div style={{ width: "100%", height: "100vh", background: "#0a0a0b" }}>
+        <ObjectiveBar objective={objective} />
+        <ReactFlowProvider>
+          <GraphCanvas timeline={timeline} objective={objective} />
+        </ReactFlowProvider>
+      </div>
     </div>
   );
 }
@@ -115,63 +125,10 @@ function ObjectiveBar({ objective }: { objective?: Objective | null }) {
 }
 
 function GraphCanvas({ timeline, objective }: { timeline: EventNode[]; objective?: Objective }) {
-  const baseNodes = useMemo<Node[]>(
-    () =>
-      timeline.map((n) => ({
-        id: n.id,
-        data: { label: `${n.year} — ${n.text}`, raw: n },
-        position: { x: 0, y: 0 },
-        style: {
-          borderRadius: 12,
-          padding: 10,
-          border: "1px solid #2a2a2a",
-          background: "#0e0e10",
-          color: "#fff",
-          width: 320,
-          boxShadow: "0 2px 10px rgba(0,0,0,0.25)",
-        },
-      })),
-    [timeline]
-  );
-
-  const baseEdges = useMemo<Edge[]>(
-    () =>
-      timeline.flatMap((n) =>
-        (n.influences || []).map((dst) => ({
-          id: `${n.id}->${dst}`,
-          source: n.id,
-          target: dst,
-          markerEnd: { type: MarkerType.ArrowClosed },
-          style: { stroke: "#7b7b7b" },
-        }))
-      ),
-    [timeline]
-  );
-
-  const [nodes, setNodes, onNodesChange] = useNodesState(baseNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(baseEdges);
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const rf = useReactFlow();
-
-  // layout and focus on objective.initialFocusId (e.g., Hiroshima)
-  useEffect(() => {
-    (async () => {
-      const { nodes: laidOut, edges: e } = await dagLayout(baseNodes, baseEdges);
-      setNodes(laidOut);
-      setEdges(e);
-      const focusId =
-        objective?.initialFocusId ||
-        timeline.find((n) => n.year === Math.min(...timeline.map((x) => x.year)))?.id;
-      if (!focusId) return;
-      requestAnimationFrame(() => {
-        const n = rf.getNodes().find((x) => x.id === focusId);
-        if (!n) return;
-        const w = n.width ?? 320;
-        const h = n.height ?? 84;
-        rf.setCenter(n.position.x + w / 2, n.position.y + h / 2, { zoom: 1.2, duration: 800 });
-      });
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [baseNodes, baseEdges, objective?.initialFocusId]);
+  const nodeTypes = useMemo(() => ({ editable: EditableNode }), []);
 
   const callLLM = useCallback(async (context: string, oldHeadline: string) => {
     const res = await fetch("/api/rewrite", {
@@ -197,33 +154,82 @@ function GraphCanvas({ timeline, objective }: { timeline: EventNode[]; objective
     [callLLM]
   );
 
-  const onNodeDoubleClick = useCallback(
-    async (_: any, node: Node) => {
-      const original = node.data?.raw as EventNode;
-      const currentText = original?.text ?? "";
-      const newText = window.prompt("Edit headline", currentText);
-      if (newText == null || newText === currentText) return;
-      const updated: EventNode[] = timeline.map((n) =>
-        n.id === original.id ? { ...n, text: newText } : n
-      );
-      await propagateChange(original.id, updated);
-      // push text change into visible label
-      setNodes((nds) =>
-        nds.map((n) =>
-          n.id === original.id ? { ...n, data: { ...n.data, label: `${original.year} — ${newText}`, raw: { ...original, text: newText } } } : n
-        )
-      );
-    },
+  const baseNodes = useMemo<Node[]>(
+    () =>
+      timeline.map((n) => ({
+        id: n.id,
+        type: "editable",
+        data: {
+          raw: n,
+          onEdit: async (newText: string) => {
+            const updated = timeline.map((ev) =>
+              ev.id === n.id ? { ...ev, text: newText } : ev
+            );
+            await propagateChange(n.id, updated);
+            setNodes((nds) =>
+              nds.map((node) =>
+                node.id === n.id
+                  ? {
+                      ...node,
+                      data: {
+                        ...node.data,
+                        raw: { ...n, text: newText },
+                      },
+                    }
+                  : node
+              )
+            );
+          },
+        },
+        position: { x: 0, y: 0 },
+      })),
     [timeline, propagateChange, setNodes]
   );
+
+  const baseEdges = useMemo<Edge[]>(
+    () =>
+      timeline.flatMap((n) =>
+        (n.influences || []).map((dst) => ({
+          id: `${n.id}->${dst}`,
+          source: n.id,
+          target: dst,
+          markerEnd: { type: MarkerType.ArrowClosed },
+          style: { stroke: "#7b7b7b" },
+        }))
+      ),
+    [timeline]
+  );
+
+  useEffect(() => {
+    (async () => {
+      const { nodes: laidOut, edges: e } = await dagLayout(baseNodes, baseEdges);
+      setNodes(laidOut);
+      setEdges(e);
+
+      const focusId =
+        objective?.initialFocusId ||
+        timeline.find((n) => n.year === Math.min(...timeline.map((x) => x.year)))?.id;
+      if (!focusId) return;
+      requestAnimationFrame(() => {
+        const n = rf.getNodes().find((x) => x.id === focusId);
+        if (!n) return;
+        const w = n.width ?? 320;
+        const h = n.height ?? 84;
+        rf.setCenter(n.position.x + w / 2, n.position.y + h / 2, {
+          zoom: 1.2,
+          duration: 800,
+        });
+      });
+    })();
+  }, [baseNodes, baseEdges, objective?.initialFocusId, rf, timeline]);
 
   return (
     <ReactFlow
       nodes={nodes}
       edges={edges}
+      nodeTypes={nodeTypes}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
-      onNodeDoubleClick={onNodeDoubleClick}
       fitView
       fitViewOptions={{ padding: 0.2 }}
     >
