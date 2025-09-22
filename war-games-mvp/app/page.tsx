@@ -229,6 +229,25 @@ function GraphCanvas({ timeline, objective }: { timeline: EventNode[]; objective
     })();
   }, [baseNodes, baseEdges, objective?.initialFocusId, rf, currentTimeline]);
 
+  // Arrow key navigation
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      const panStep = 120;
+      const { x, y, zoom } = rf.getViewport();
+      if (e.key === "ArrowLeft") {
+        rf.setCenter(x - panStep, y, { zoom, duration: 200 });
+      } else if (e.key === "ArrowRight") {
+        rf.setCenter(x + panStep, y, { zoom, duration: 200 });
+      } else if (e.key === "ArrowUp") {
+        rf.setCenter(x, y - panStep, { zoom, duration: 200 });
+      } else if (e.key === "ArrowDown") {
+        rf.setCenter(x, y + panStep, { zoom, duration: 200 });
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [rf]);
+
   return (
     <ReactFlow
       nodes={nodes}
