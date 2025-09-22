@@ -22,7 +22,7 @@ export default function EditableNode({ data }: EditableNodeProps) {
     <div
       style={{
         width: 300,
-        background: "#fff",
+        background: "#000",
         border: "1px solid #aaa",
         borderRadius: 6,
         padding: 8,
@@ -54,7 +54,7 @@ export default function EditableNode({ data }: EditableNodeProps) {
         />
       ) : (
         <div
-          onDoubleClick={() => setEditing(true)}
+          onClick={() => setEditing(true)}
           style={{ cursor: "pointer" }}
           title={
             data.raw.reason

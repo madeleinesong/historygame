@@ -177,12 +177,20 @@ const propagateChange = useCallback(
       const body = await res.json();
       if (!res.ok) throw new Error(body.error || "rewrite api error");
 
-      const updates: Array<{ id: string; newText: string }> = body.updates;
+      const updates: Array<{ id: string; newText: string; reason?: string; confidence?: number }> = body.updates;
       const updateMap = new Map(updates.map((u) => [u.id, u.newText]));
 
       // apply all updates immutably
       return data.map((ev) =>
-        updateMap.has(ev.id) ? { ...ev, text: updateMap.get(ev.id)! } : ev
+        updateMap.has(ev.id)
+          ? {
+              ...ev,
+              text: updateMap.get(ev.id)!,
+              // pass along reason/confidence if they exist
+              reason: updates.find((u) => u.id === ev.id)?.reason,
+              confidence: updates.find((u) => u.id === ev.id)?.confidence,
+            }
+          : ev
       );
     } catch (err) {
       console.error("propagateChange failed", err);
