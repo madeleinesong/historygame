@@ -117,8 +117,7 @@ function ObjectiveBar({ objective }: { objective?: Objective | null }) {
       }}
     >
       <div>
-        <div style={{ fontWeight: 700, fontSize: 14, opacity: 0.85 }}>Objective</div>
-        <div style={{ fontSize: 16 }}>{objective?.title || "—"}</div>
+        <div style={{ fontWeight: 700, fontSize: 14, opacity: 0.85 }}>Objective: {objective?.title || "—"}</div>
       </div>
     </div>
   );
@@ -132,39 +131,66 @@ function GraphCanvas({ timeline, objective }: { timeline: EventNode[]; objective
   const rf = useReactFlow();
   const nodeTypes = useMemo(() => ({ editable: EditableNode }), []);
 
-  // --- call LLM API ---
-  const callLLM = useCallback(async (context: string, oldHeadline: string) => {
-    const res = await fetch("/api/rewrite", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ context, oldHeadline }),
-    });
-    const { newHeadline } = await res.json();
-    return newHeadline as string;
-  }, []);
-
-  // --- recursively propagate changes immutably ---
-  const propagateChange = useCallback(
-    async (changedId: string, data: EventNode[]): Promise<EventNode[]> => {
-      const changed = data.find((d) => d.id === changedId);
-      if (!changed) return data;
-
-      let updated = [...data];
-      for (const childId of changed.influences || []) {
-        const idx = updated.findIndex((d) => d.id === childId);
-        if (idx === -1) continue;
-
-        const child = updated[idx];
-        const newText = await callLLM(changed.text, child.text);
-        updated[idx] = { ...child, text: newText };
-
-        // recurse down the chain
-        updated = await propagateChange(childId, updated);
-      }
-      return updated;
+// inside GraphCanvas (or wherever callLLM lived)
+  const callCounterfactual = useCallback(
+    async ({
+      changedId,
+      changeInstruction,
+      newText,
+      timelineToSend,
+    }: {
+      changedId: string;
+      changeInstruction: string; // "negate" | "replace" | free text like "delay until 1941"
+      newText?: string | null;
+      timelineToSend: EventNode[];
+    }) => {
+      const res = await fetch("/api/rewrite", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ changedId, changeInstruction, newText, timeline: timelineToSend }),
+      });
+      const body = await res.json();
+      if (!res.ok) throw new Error(body?.error || "rewrite api error");
+      return body.updates as Array<{ id: string; newText: string }>;
     },
-    [callLLM]
+    []
   );
+
+const propagateChange = useCallback(
+  async (changedId: string, newText: string, data: EventNode[]): Promise<EventNode[]> => {
+    // figure out instruction type
+    const lower = newText.toLowerCase();
+    const isNegate = /doesn'?t|does not|didn'?t|did not/.test(lower);
+    const changeInstruction = isNegate ? "negate" : "replace";
+
+    try {
+      const res = await fetch("/api/rewrite", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          changedId,
+          changeInstruction,
+          newText,
+          timeline: data,
+        }),
+      });
+      const body = await res.json();
+      if (!res.ok) throw new Error(body.error || "rewrite api error");
+
+      const updates: Array<{ id: string; newText: string }> = body.updates;
+      const updateMap = new Map(updates.map((u) => [u.id, u.newText]));
+
+      // apply all updates immutably
+      return data.map((ev) =>
+        updateMap.has(ev.id) ? { ...ev, text: updateMap.get(ev.id)! } : ev
+      );
+    } catch (err) {
+      console.error("propagateChange failed", err);
+      return data;
+    }
+  },
+  []
+);
 
   // --- base graph elements ---
   const baseNodes = useMemo<Node[]>(
@@ -180,7 +206,7 @@ function GraphCanvas({ timeline, objective }: { timeline: EventNode[]; objective
               ev.id === n.id ? { ...ev, text: newText } : ev
             );
             // cascade changes
-            updated = await propagateChange(n.id, updated);
+            updated = await propagateChange(n.id, newText, updated);
             setTimeline(updated);
           },
         },
