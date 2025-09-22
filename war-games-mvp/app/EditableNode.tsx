@@ -57,7 +57,7 @@ export default function EditableNode({ data }: NodeProps) {
           </button>
         </form>
       ) : (
-        <div onDoubleClick={() => setEditing(true)} style={{ fontSize: 16 }}>
+        <div onClick={() => setEditing(true)} style={{ fontSize: 16 }}>
           {text}
         </div>
       )}

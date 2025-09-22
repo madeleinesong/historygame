@@ -127,9 +127,12 @@ function ObjectiveBar({ objective }: { objective?: Objective | null }) {
 function GraphCanvas({ timeline, objective }: { timeline: EventNode[]; objective?: Objective }) {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [currentTimeline, setTimeline] = useState<EventNode[]>(timeline);
+
   const rf = useReactFlow();
   const nodeTypes = useMemo(() => ({ editable: EditableNode }), []);
 
+  // --- call LLM API ---
   const callLLM = useCallback(async (context: string, oldHeadline: string) => {
     const res = await fetch("/api/rewrite", {
       method: "POST",
@@ -140,55 +143,55 @@ function GraphCanvas({ timeline, objective }: { timeline: EventNode[]; objective
     return newHeadline as string;
   }, []);
 
+  // --- recursively propagate changes immutably ---
   const propagateChange = useCallback(
-    async (changedId: string, data: EventNode[]) => {
+    async (changedId: string, data: EventNode[]): Promise<EventNode[]> => {
       const changed = data.find((d) => d.id === changedId);
-      if (!changed) return;
+      if (!changed) return data;
+
+      let updated = [...data];
       for (const childId of changed.influences || []) {
-        const child = data.find((d) => d.id === childId);
-        if (!child) continue;
-        child.text = await callLLM(changed.text, child.text);
-        await propagateChange(childId, data);
+        const idx = updated.findIndex((d) => d.id === childId);
+        if (idx === -1) continue;
+
+        const child = updated[idx];
+        const newText = await callLLM(changed.text, child.text);
+        updated[idx] = { ...child, text: newText };
+
+        // recurse down the chain
+        updated = await propagateChange(childId, updated);
       }
+      return updated;
     },
     [callLLM]
   );
 
+  // --- base graph elements ---
   const baseNodes = useMemo<Node[]>(
     () =>
-      timeline.map((n) => ({
+      currentTimeline.map((n) => ({
         id: n.id,
         type: "editable",
         data: {
           raw: n,
           onEdit: async (newText: string) => {
-            const updated = timeline.map((ev) =>
+            // update current node
+            let updated = currentTimeline.map((ev) =>
               ev.id === n.id ? { ...ev, text: newText } : ev
             );
-            await propagateChange(n.id, updated);
-            setNodes((nds) =>
-              nds.map((node) =>
-                node.id === n.id
-                  ? {
-                      ...node,
-                      data: {
-                        ...node.data,
-                        raw: { ...n, text: newText },
-                      },
-                    }
-                  : node
-              )
-            );
+            // cascade changes
+            updated = await propagateChange(n.id, updated);
+            setTimeline(updated);
           },
         },
         position: { x: 0, y: 0 },
       })),
-    [timeline, propagateChange, setNodes]
+    [currentTimeline, propagateChange]
   );
 
   const baseEdges = useMemo<Edge[]>(
     () =>
-      timeline.flatMap((n) =>
+      currentTimeline.flatMap((n) =>
         (n.influences || []).map((dst) => ({
           id: `${n.id}->${dst}`,
           source: n.id,
@@ -197,9 +200,10 @@ function GraphCanvas({ timeline, objective }: { timeline: EventNode[]; objective
           style: { stroke: "#7b7b7b" },
         }))
       ),
-    [timeline]
+    [currentTimeline]
   );
 
+  // --- layout + focus ---
   useEffect(() => {
     (async () => {
       const { nodes: laidOut, edges: e } = await dagLayout(baseNodes, baseEdges);
@@ -208,8 +212,10 @@ function GraphCanvas({ timeline, objective }: { timeline: EventNode[]; objective
 
       const focusId =
         objective?.initialFocusId ||
-        timeline.find((n) => n.year === Math.min(...timeline.map((x) => x.year)))?.id;
+        currentTimeline.find((n) => n.year === Math.min(...currentTimeline.map((x) => x.year)))
+          ?.id;
       if (!focusId) return;
+
       requestAnimationFrame(() => {
         const n = rf.getNodes().find((x) => x.id === focusId);
         if (!n) return;
@@ -221,7 +227,7 @@ function GraphCanvas({ timeline, objective }: { timeline: EventNode[]; objective
         });
       });
     })();
-  }, [baseNodes, baseEdges, objective?.initialFocusId, rf, timeline]);
+  }, [baseNodes, baseEdges, objective?.initialFocusId, rf, currentTimeline]);
 
   return (
     <ReactFlow
