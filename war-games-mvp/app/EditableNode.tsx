@@ -12,9 +12,10 @@ type EditableNodeProps = {
     };
     onEdit: (newText: string) => Promise<void>;
   };
+  darkMode?: boolean; // <-- add this
 };
 
-export default function EditableNode({ data }: EditableNodeProps) {
+export default function EditableNode({ data, darkMode }: EditableNodeProps) {
   const [editing, setEditing] = useState(false);
   const [text, setText] = useState(data.raw.text);
 
@@ -22,11 +23,11 @@ export default function EditableNode({ data }: EditableNodeProps) {
     <div
       style={{
         width: 300,
-        background: "#fff",
+        background: darkMode ? "#222" : "#fff",
         border: "1px solid #aaa",
         borderRadius: 6,
         padding: 8,
-        color: "#000",
+        color: darkMode ? "#eee" : "#000",
         fontSize: 14,
         position: "relative",
       }}
@@ -51,6 +52,8 @@ export default function EditableNode({ data }: EditableNodeProps) {
             border: "1px solid #000",
             borderRadius: 4,
             padding: "4px 6px",
+            background: darkMode ? "#333" : "#fff",
+            color: darkMode ? "#eee" : "#000",
           }}
         />
       ) : (

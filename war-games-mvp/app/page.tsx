@@ -2,7 +2,6 @@
 
 import React, { useEffect, useMemo, useState, useCallback } from "react";
 import ReactFlow, {
-  Background,
   Controls,
   MiniMap,
   Node,
@@ -58,6 +57,8 @@ async function dagLayout(nodes: Node[], edges: Edge[]) {
 export default function Page() {
   const [timeline, setTimeline] = useState<EventNode[]>([]);
   const [loading, setLoading] = useState(true);
+  const [darkMode, setDarkMode] = useState(true);
+
 
   useEffect(() => {
     (async () => {
@@ -86,15 +87,52 @@ export default function Page() {
   if (loading) return <div style={{ padding: 16 }}>loading…</div>;
 
   return (
-    <div className="w-screen h-screen overflow-hidden bg-gray-100">
-      <div className="fixed top-0 left-0 w-full bg-white shadow-md z-20 px-6 py-3" />
-      <div style={{ width: "100%", height: "100vh", background: "#fff" }}>
-        <ObjectiveBar objective={objective} />
-        <ReactFlowProvider>
-          <GraphCanvas timeline={timeline} objective={objective} />
-        </ReactFlowProvider>
-      </div>
+  <div
+    className={darkMode ? "bg-gray-900" : "bg-gray-100"}
+    style={{
+      width: "100vw",
+      height: "100vh",
+      overflow: "hidden",
+      position: "relative",
+      transition: "background 0.2s",
+    }}
+  >
+    {/* Light/Dark mode toggle button */}
+    <button
+      onClick={() => setDarkMode((d) => !d)}
+      style={{
+        position: "fixed",
+        top: 16,
+        right: 24,
+        zIndex: 30,
+        background: darkMode ? "#222" : "#eee",
+        color: darkMode ? "#fff" : "#222",
+        border: "1px solid #888",
+        borderRadius: 8,
+        padding: "8px 14px",
+        fontWeight: 600,
+        cursor: "pointer",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+      }}
+      aria-label="Toggle dark mode"
+    >
+      {darkMode ? "dark" : "light"}
+    </button>
+    <div
+      className="w-screen h-screen overflow-hidden"
+      style={{
+        background: darkMode ? "#222" : "#fff", // <-- update here
+        width: "100%",
+        height: "100vh",
+      }}
+    >
+      <div className="fixed top-0 left-0 w-full z-20 px-6 py-3" />
+      <ObjectiveBar objective={objective} />
+      <ReactFlowProvider>
+        <GraphCanvas timeline={timeline} objective={objective} darkMode={darkMode} />
+      </ReactFlowProvider>
     </div>
+  </div>
   );
 }
 
@@ -123,13 +161,18 @@ function ObjectiveBar({ objective }: { objective?: Objective | null }) {
   );
 }
 
-function GraphCanvas({ timeline, objective }: { timeline: EventNode[]; objective?: Objective }) {
+function GraphCanvas({ timeline, objective, darkMode }: { timeline: EventNode[]; objective?: Objective; darkMode: boolean }) {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [currentTimeline, setTimeline] = useState<EventNode[]>(timeline);
 
   const rf = useReactFlow();
-  const nodeTypes = useMemo(() => ({ editable: EditableNode }), []);
+  const nodeTypes = useMemo(
+    () => ({
+      editable: (props: React.JSX.IntrinsicAttributes & { data: { raw: { id: string; text: string; reason?: string; confidence?: number; }; onEdit: (newText: string) => Promise<void>; }; darkMode?: boolean; }) => <EditableNode {...props} darkMode={darkMode} />,
+    }),
+    [darkMode]
+  );
 
 const propagateChange = useCallback(
   async (changedId: string, newText: string, data: EventNode[]): Promise<EventNode[]> => {
