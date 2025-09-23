@@ -22,10 +22,11 @@ export default function EditableNode({ data }: EditableNodeProps) {
     <div
       style={{
         width: 300,
-        background: "#000",
+        background: "#fff",
         border: "1px solid #aaa",
         borderRadius: 6,
         padding: 8,
+        color: "#000",
         fontSize: 14,
         position: "relative",
       }}
@@ -47,7 +48,7 @@ export default function EditableNode({ data }: EditableNodeProps) {
           }}
           style={{
             width: "100%",
-            border: "1px solid #ccc",
+            border: "1px solid #000",
             borderRadius: 4,
             padding: "4px 6px",
           }}

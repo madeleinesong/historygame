@@ -87,8 +87,8 @@ export default function Page() {
 
   return (
     <div className="w-screen h-screen overflow-hidden bg-gray-100">
-      <div className="fixed top-0 left-0 w-full bg-black shadow-md z-20 px-6 py-3" />
-      <div style={{ width: "100%", height: "100vh", background: "#0a0a0b" }}>
+      <div className="fixed top-0 left-0 w-full bg-white shadow-md z-20 px-6 py-3" />
+      <div style={{ width: "100%", height: "100vh", background: "#fff" }}>
         <ObjectiveBar objective={objective} />
         <ReactFlowProvider>
           <GraphCanvas timeline={timeline} objective={objective} />
@@ -103,7 +103,7 @@ function ObjectiveBar({ objective }: { objective?: Objective | null }) {
     <div
       style={{
         position: "absolute",
-        top: 12,
+        top: 4,
         left: 12,
         zIndex: 20,
         display: "flex",
@@ -131,62 +131,34 @@ function GraphCanvas({ timeline, objective }: { timeline: EventNode[]; objective
   const rf = useReactFlow();
   const nodeTypes = useMemo(() => ({ editable: EditableNode }), []);
 
-// inside GraphCanvas (or wherever callLLM lived)
-  const callCounterfactual = useCallback(
-    async ({
-      changedId,
-      changeInstruction,
-      newText,
-      timelineToSend,
-    }: {
-      changedId: string;
-      changeInstruction: string; // "negate" | "replace" | free text like "delay until 1941"
-      newText?: string | null;
-      timelineToSend: EventNode[];
-    }) => {
-      const res = await fetch("/api/rewrite", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ changedId, changeInstruction, newText, timeline: timelineToSend }),
-      });
-      const body = await res.json();
-      if (!res.ok) throw new Error(body?.error || "rewrite api error");
-      return body.updates as Array<{ id: string; newText: string }>;
-    },
-    []
-  );
-
 const propagateChange = useCallback(
   async (changedId: string, newText: string, data: EventNode[]): Promise<EventNode[]> => {
-    // figure out instruction type
-    const lower = newText.toLowerCase();
-    const isNegate = /doesn'?t|does not|didn'?t|did not/.test(lower);
-    const changeInstruction = isNegate ? "negate" : "replace";
-
     try {
       const res = await fetch("/api/rewrite", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           changedId,
-          changeInstruction,
+          changeInstruction: "freeform", // keep it open-world
           newText,
           timeline: data,
         }),
       });
+
       const body = await res.json();
       if (!res.ok) throw new Error(body.error || "rewrite api error");
 
-      const updates: Array<{ id: string; newText: string; reason?: string; confidence?: number }> = body.updates;
+      const updates: Array<{ id: string; newText: string; reason?: string; confidence?: number }> =
+        body.updates;
+
       const updateMap = new Map(updates.map((u) => [u.id, u.newText]));
 
-      // apply all updates immutably
+      // apply updates immutably
       return data.map((ev) =>
         updateMap.has(ev.id)
           ? {
               ...ev,
               text: updateMap.get(ev.id)!,
-              // pass along reason/confidence if they exist
               reason: updates.find((u) => u.id === ev.id)?.reason,
               confidence: updates.find((u) => u.id === ev.id)?.confidence,
             }
@@ -300,7 +272,6 @@ const propagateChange = useCallback(
         maskColor="rgba(0,0,0,0.2)"
       />
       <Controls />
-      <Background />
     </ReactFlow>
   );
 }

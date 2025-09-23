@@ -16,17 +16,16 @@ type Update = {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { changedId, changeInstruction, newText, timeline } = body;
+    const { changedId, newText, timeline } = body;
 
-    if (!changedId || !changeInstruction || !timeline) {
-      return NextResponse.json({ error: "Missing changedId, changeInstruction, or timeline" }, { status: 400 });
+    if (!changedId || !timeline) {
+      return NextResponse.json({ error: "Missing changedId or timeline" }, { status: 400 });
     }
 
     // Build a strict prompt that requests ONLY JSON (no chatter).
     const system = `
 You are a counterfactual historian assistant with an expert level knowledge of history, the infinite web of reverberating causes and consequences. The user will give you:
 - a single node id that was changed in a historical timeline (changedId),
-- a changeInstruction describing how it changed (e.g., "negate" meaning this event did NOT happen, or "replace" with new headline text),
 - the newText if provided, and
 - the timeline as an array of events (each event has id, year, text, influences[]).
 
@@ -48,7 +47,6 @@ Guidelines:
     // create the user message giving the full data
     const user = JSON.stringify({
       changedId,
-      changeInstruction,
       newText: newText || null,
       timeline, // the frontend should send either the full timeline or the subtree of interest
     });
