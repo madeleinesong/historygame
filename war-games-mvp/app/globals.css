@@ -9,4 +9,4 @@ body { @apply bg-gray-50 text-gray-900 dark:bg-neutral-950 dark:text-neutral-100
 .btn { @apply inline-flex items-center gap-1 rounded-lg px-3 py-2 border text-sm; }
 .btn-primary { @apply bg-black text-white border-black dark:bg-white dark:text-black dark:border-white; }
 .card { @apply rounded-2xl border p-4 bg-white/70 backdrop-blur dark:bg-white/5; }
-.badge { @apply text-xs px-2 py-0.5 rounded-full border; }
+.badge { @apply text-xs px-2 py-0.5 rounded-full border; }23
