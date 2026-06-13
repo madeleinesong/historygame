@@ -127,6 +127,8 @@ You MUST respond with valid JSON only. No markdown, no preamble, just the JSON o
   "gameOver": false,
   "gameOverType": null,
   "gameOverReason": null,
+
+CRITICAL: gameOverType must be EXACTLY "won" or "lost" (never "player_eliminated", "death", "arrested", or anything else). Use "lost" for any bad outcome, "won" only if the Enabling Act is prevented.
   "suggestedActions": ["three concrete actions the player could take from their current position"]
 }
 

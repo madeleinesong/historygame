@@ -59,7 +59,8 @@ function normalizeResponse(raw: any): ActionResponse {
     physicalStatusChange: raw.physicalStatusChange ?? null,
     worldStateUpdates: raw.worldStateUpdates ?? {},
     gameOver: Boolean(raw.gameOver),
-    gameOverType: raw.gameOverType ?? null,
+    // Normalize gameOverType — LLM sometimes returns 'player_eliminated', 'death', etc.
+    gameOverType: raw.gameOverType === 'won' ? 'won' : (raw.gameOver ? 'lost' : null),
     gameOverReason: raw.gameOverReason ?? null,
     suggestedActions: Array.isArray(raw.suggestedActions) ? raw.suggestedActions.map(String) : [],
   };
