@@ -3,7 +3,21 @@ import Anthropic from '@anthropic-ai/sdk';
 import { GameState, ActionResponse } from '@/lib/types';
 import { buildSystemPrompt } from '@/lib/systemPrompt';
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+function makeClient() {
+  if (process.env.ANTHROPIC_API_KEY) {
+    return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  }
+  if (process.env.ANTHROPIC_AUTH_TOKEN) {
+    return new Anthropic({ authToken: process.env.ANTHROPIC_AUTH_TOKEN });
+  }
+  return new Anthropic();
+}
+
+const client = makeClient();
+
+const MODEL = process.env.GAME_MODEL ?? 'claude-opus-4-8';
+// Only Opus 4.6+ and Claude 4.x family support adaptive thinking
+const SUPPORTS_THINKING = !MODEL.includes('haiku') && !MODEL.includes('sonnet-3') && !MODEL.includes('opus-3');
 
 export async function POST(req: NextRequest) {
   try {
@@ -15,10 +29,9 @@ export async function POST(req: NextRequest) {
 
     const systemPrompt = buildSystemPrompt(gameState);
 
-    const stream = await client.messages.stream({
-      model: 'claude-opus-4-8',
+    const requestParams: Parameters<typeof client.messages.stream>[0] = {
+      model: MODEL,
       max_tokens: 4096,
-      thinking: { type: 'adaptive' },
       system: systemPrompt,
       messages: [
         {
@@ -26,8 +39,13 @@ export async function POST(req: NextRequest) {
           content: `My action: ${action.trim()}`,
         },
       ],
-    });
+    };
 
+    if (SUPPORTS_THINKING) {
+      requestParams.thinking = { type: 'adaptive' };
+    }
+
+    const stream = await client.messages.stream(requestParams);
     const message = await stream.finalMessage();
 
     // Extract text content from the response
