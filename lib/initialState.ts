@@ -1,0 +1,153 @@
+import { GameState } from './types';
+
+export function createInitialState(): GameState {
+  return {
+    version: 1,
+    gameStatus: 'playing',
+    currentDateTime: 'Monday, January 30, 1933, 9:00 AM',
+    currentDateISO: '1933-01-30T09:00:00',
+    turnCount: 0,
+    currentLocation: 'Café Josty, Potsdamer Platz, Berlin',
+    player: {
+      name: 'Karl Brandt',
+      occupation: 'Journalist',
+      affiliation: 'Berliner Tageblatt',
+      physicalStatus: 'healthy',
+      money: 12,
+      inventory: [
+        'press identification card',
+        'reporter\'s notebook',
+        'fountain pen',
+        'street map of Berlin',
+        'Berliner Tageblatt press badge',
+      ],
+      relationships: [
+        {
+          person: 'Theodor Wolff (editor-in-chief, Berliner Tageblatt)',
+          status: 'acquaintance',
+          lastContact: '1933-01-28',
+          notes: 'Skeptical of Nazi rise but fears reprisals. Wants compelling evidence before printing anything inflammatory.',
+        },
+        {
+          person: 'Hans Schreiber (SPD Reichstag deputy)',
+          status: 'acquaintance',
+          lastContact: '1933-01-15',
+          notes: 'Met at a parliamentary press event. Cautiously sympathetic to liberal press.',
+        },
+        {
+          person: 'Greta Fuchs (café regular, secretary at Interior Ministry)',
+          status: 'acquaintance',
+          lastContact: '1933-01-29',
+          notes: 'Shares a table at Café Josty most mornings. Nervous about the political climate.',
+        },
+      ],
+      knownFacts: [
+        'Hitler was appointed Reich Chancellor by Hindenburg this morning, January 30, 1933.',
+        'Papen is Vice-Chancellor and believes he can control Hitler.',
+        'The Reichstag is scheduled to meet but may be dissolved for new elections.',
+        'The KPD (Communist Party) is legal but under increasing pressure.',
+        'The SA (Brownshirts) held a torchlight parade through Berlin last night.',
+        'Schleicher was forced out as Chancellor after Papen undermined him with Hindenburg.',
+        'The Enabling Act, if passed, would give Hitler dictatorial power for four years.',
+        'The Reichstag Fire Decree could suspend civil liberties if an emergency is declared.',
+      ],
+    },
+    world: {
+      naziConsolidationLevel: 8,
+      keyActorStates: {
+        hitler: {
+          name: 'Adolf Hitler',
+          disposition: 'triumphant, moving to consolidate power rapidly',
+          location: 'Reich Chancellery, Wilhelmstrasse',
+          status: 'active',
+          notes: 'Just appointed Chancellor. Planning to call new elections and neutralize opposition.',
+        },
+        hindenburg: {
+          name: 'Paul von Hindenburg',
+          disposition: 'reluctant, believes he has contained Hitler via cabinet constraints',
+          location: 'Reichspräsident\'s Palace',
+          status: 'active',
+          notes: 'Old, frail, manipulated by Papen. Believes non-Nazi ministers will check Hitler.',
+        },
+        papen: {
+          name: 'Franz von Papen',
+          disposition: 'overconfident, believes he is the real power behind Hitler',
+          location: 'Vice-Chancellery',
+          status: 'active',
+          notes: '"We have hired him." Fatally underestimates Nazi ruthlessness.',
+        },
+        schleicher: {
+          name: 'Kurt von Schleicher',
+          disposition: 'bitter, plotting counter-moves',
+          location: 'Berlin, private residence',
+          status: 'active',
+          notes: 'Former Chancellor. Potential ally against Hitler if approached carefully.',
+        },
+        goebbels: {
+          name: 'Joseph Goebbels',
+          disposition: 'ecstatic, organizing propaganda apparatus',
+          location: 'NSDAP headquarters, Berlin',
+          status: 'active',
+          notes: 'Will control all media if Nazis consolidate. Key target to expose or isolate.',
+        },
+        spd_leadership: {
+          name: 'SPD Leadership (Otto Wels et al.)',
+          disposition: 'alarmed but committed to constitutional methods',
+          location: 'SPD headquarters, Berlin',
+          status: 'active',
+          notes: 'Will eventually be the only party to vote against the Enabling Act.',
+        },
+        kpd_leadership: {
+          name: 'KPD Leadership (Ernst Thälmann)',
+          disposition: 'hostile to SPD, underestimating Nazi threat',
+          location: 'KPD headquarters, Berlin',
+          status: 'active',
+          notes: 'Fatally calls SPD "social fascists." May be more receptive to united front arguments.',
+        },
+        reichswehr_command: {
+          name: 'General Werner von Blomberg (Reichswehr)',
+          disposition: 'accommodating to Hitler',
+          location: 'Reichswehr HQ, Bendlerblock',
+          status: 'active',
+          notes: 'New Defense Minister, loyal to Hitler. Other generals may be more skeptical.',
+        },
+      },
+      pendingEvents: [
+        {
+          id: 'reichstag_dissolved',
+          description: 'Hitler dissolves Reichstag and calls new elections for March 5, 1933',
+          triggerCondition: 'historical',
+          scheduledDate: '1933-02-01',
+          triggered: false,
+        },
+        {
+          id: 'reichstag_fire',
+          description: 'The Reichstag building burns under mysterious circumstances',
+          triggerCondition: 'historical_unless_prevented',
+          scheduledDate: '1933-02-27',
+          triggered: false,
+        },
+        {
+          id: 'enabling_act_vote',
+          description: 'Reichstag votes on the Enabling Act',
+          triggerCondition: 'historical_unless_prevented',
+          scheduledDate: '1933-03-23',
+          triggered: false,
+        },
+      ],
+      triggeredEvents: [],
+      causalChain: [
+        'Jan 30: Hitler appointed Reich Chancellor by Hindenburg',
+      ],
+      reichstagFireStatus: 'not_happened',
+      enablingActStatus: 'not_introduced',
+      extraDetails: {
+        electionsCalled: false,
+        pressurbanRestrictions: false,
+        saStreetViolence: 'low',
+        internationalAwareness: 'low',
+      },
+    },
+    journal: [],
+  };
+}
