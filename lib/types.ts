@@ -29,6 +29,8 @@ export interface WorldEvent {
   triggered: boolean;
 }
 
+export type CharacterType = 'journalist' | 'centre_party_deputy' | 'chamberlain';
+
 export interface PlayerState {
   name: string;
   occupation: string;
@@ -38,6 +40,7 @@ export interface PlayerState {
   inventory: string[];
   relationships: Relationship[];
   knownFacts: string[];
+  characterType: CharacterType;
 }
 
 export interface WorldState {
@@ -89,3 +92,39 @@ export interface ActionResponse {
   gameOverReason: string | null;
   suggestedActions: string[];
 }
+
+export interface CharacterDefinition {
+  id: CharacterType;
+  name: string;
+  title: string;
+  tagline: string;
+  description: string;
+  difficulty: 'Accessible' | 'Challenging' | 'Expert';
+}
+
+export const CHARACTERS: CharacterDefinition[] = [
+  {
+    id: 'journalist',
+    name: 'Karl Brandt',
+    title: 'Journalist, Berliner Tageblatt',
+    tagline: 'The pen is your only weapon.',
+    description: 'You can expose, investigate, and inform — but only if someone listens. Build sources, publish before the press goes dark.',
+    difficulty: 'Accessible',
+  },
+  {
+    id: 'centre_party_deputy',
+    name: 'Heinrich Möller',
+    title: 'Centre Party Reichstag Deputy',
+    tagline: 'You hold the decisive votes.',
+    description: 'The Centre Party\'s yes-votes will give Hitler his 2/3 majority. As a Centre Party deputy, you can try to keep your colleagues from capitulating — but the Church, the Concordat promise, and Nazi intimidation all work against you.',
+    difficulty: 'Challenging',
+  },
+  {
+    id: 'chamberlain',
+    name: 'Neville Chamberlain',
+    title: 'Chancellor of the Exchequer, United Kingdom',
+    tagline: 'International pressure is your lever.',
+    description: 'From London, you must convince the British government to take Hitler seriously — in 1933, before it is too late. Coordinate with France, brief the press, threaten economic isolation. You have more time, but far less direct influence.',
+    difficulty: 'Expert',
+  },
+];

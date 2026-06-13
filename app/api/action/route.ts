@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
-import { GameState, ActionResponse } from '@/lib/types';
+import { GameState, ActionResponse, Relationship } from '@/lib/types';
 import { buildSystemPrompt } from '@/lib/systemPrompt';
 
 function makeClient() {
@@ -18,6 +18,52 @@ const client = makeClient();
 const MODEL = process.env.GAME_MODEL ?? 'claude-opus-4-8';
 // Only Opus 4.6+ and Claude 4.x family support adaptive thinking
 const SUPPORTS_THINKING = !MODEL.includes('haiku') && !MODEL.includes('sonnet-3') && !MODEL.includes('opus-3');
+
+const VALID_STATUSES = new Set<Relationship['status']>(['stranger', 'acquaintance', 'trusted', 'suspicious', 'hostile']);
+
+function normalizeRelationshipStatus(raw: unknown): Relationship['status'] {
+  if (typeof raw !== 'string') return 'acquaintance';
+  const lower = raw.toLowerCase();
+  // Try direct match first
+  if (VALID_STATUSES.has(lower as Relationship['status'])) return lower as Relationship['status'];
+  // Fuzzy map common LLM variants
+  if (lower.includes('trust') || lower.includes('ally') || lower.includes('friend')) return 'trusted';
+  if (lower.includes('hostile') || lower.includes('enemy') || lower.includes('danger')) return 'hostile';
+  if (lower.includes('suspect') || lower.includes('warn') || lower.includes('wary')) return 'suspicious';
+  if (lower.includes('stranger') || lower.includes('unknown')) return 'stranger';
+  return 'acquaintance';
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function normalizeResponse(raw: any): ActionResponse {
+  const relChanges = (raw.relationshipChanges ?? []).map((c: Record<string, unknown>) => ({
+    person: String(c.person ?? ''),
+    // Handle both "newStatus" and "statusChange" (common LLM mistake)
+    newStatus: normalizeRelationshipStatus(c.newStatus ?? c.status ?? c.statusChange),
+    notes: String(c.notes ?? ''),
+  }));
+
+  return {
+    narrative: String(raw.narrative ?? ''),
+    actionRefused: Boolean(raw.actionRefused),
+    refusalReason: raw.refusalReason ?? null,
+    timeAdvancedMinutes: Number(raw.timeAdvancedMinutes ?? 30),
+    newDateTime: String(raw.newDateTime ?? ''),
+    newDateISO: String(raw.newDateISO ?? ''),
+    locationChange: raw.locationChange ?? null,
+    newKnownFacts: Array.isArray(raw.newKnownFacts) ? raw.newKnownFacts.map(String) : [],
+    inventoryAdd: Array.isArray(raw.inventoryAdd) ? raw.inventoryAdd.map(String) : [],
+    inventoryRemove: Array.isArray(raw.inventoryRemove) ? raw.inventoryRemove.map(String) : [],
+    moneyChange: Number(raw.moneyChange ?? 0),
+    relationshipChanges: relChanges,
+    physicalStatusChange: raw.physicalStatusChange ?? null,
+    worldStateUpdates: raw.worldStateUpdates ?? {},
+    gameOver: Boolean(raw.gameOver),
+    gameOverType: raw.gameOverType ?? null,
+    gameOverReason: raw.gameOverReason ?? null,
+    suggestedActions: Array.isArray(raw.suggestedActions) ? raw.suggestedActions.map(String) : [],
+  };
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -62,7 +108,7 @@ export async function POST(req: NextRequest) {
       // Strip any markdown code fences if present
       const jsonMatch = rawText.match(/\{[\s\S]*\}/);
       if (!jsonMatch) throw new Error('No JSON found in response');
-      parsed = JSON.parse(jsonMatch[0]);
+      parsed = normalizeResponse(JSON.parse(jsonMatch[0]));
     } catch {
       console.error('Failed to parse LLM response:', rawText);
       return NextResponse.json(

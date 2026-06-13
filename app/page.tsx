@@ -1,13 +1,19 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { GameState, ActionResponse, JournalEntry } from '@/lib/types';
+import { GameState, ActionResponse, JournalEntry, CharacterType, CHARACTERS } from '@/lib/types';
 import GamePanel from '@/components/GamePanel';
 import JournalPanel from '@/components/JournalPanel';
 import StatusPanel from '@/components/StatusPanel';
 import ActionInput from '@/components/ActionInput';
 
 const SAVE_KEY = 'inside-history-save';
+
+const DIFFICULTY_COLOR: Record<string, string> = {
+  Accessible: 'text-emerald-600',
+  Challenging: 'text-amber-600',
+  Expert: 'text-red-700',
+};
 
 function applyActionResponse(state: GameState, action: string, response: ActionResponse): GameState {
   const newEntry: JournalEntry = {
@@ -68,6 +74,7 @@ function applyActionResponse(state: GameState, action: string, response: ActionR
 
 export default function Home() {
   const [gameState, setGameState] = useState<GameState | null>(null);
+  const [screen, setScreen] = useState<'menu' | 'character_select'>('menu');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [suggestedActions, setSuggestedActions] = useState<string[]>([]);
@@ -82,17 +89,22 @@ export default function Home() {
     localStorage.setItem(SAVE_KEY, JSON.stringify(state));
   }, []);
 
-  async function startNewGame() {
+  async function startNewGame(characterType: CharacterType) {
     setIsLoading(true);
     setError(null);
     try {
-      const res = await fetch('/api/new-game', { method: 'POST' });
+      const res = await fetch('/api/new-game', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ characterType }),
+      });
       const state: GameState = await res.json();
       setGameState(state);
       setSuggestedActions([]);
       setGameOverReason(null);
       saveGame(state);
       setHasSave(true);
+      setScreen('menu');
     } catch (e) {
       setError('Failed to start game.');
       console.error(e);
@@ -150,6 +162,56 @@ export default function Home() {
     }
   }
 
+  // Character selection screen
+  if (!gameState && screen === 'character_select') {
+    return (
+      <div className="min-h-screen bg-stone-950 flex items-center justify-center px-4">
+        <div className="max-w-2xl w-full py-10">
+          <button
+            onClick={() => setScreen('menu')}
+            className="text-xs font-mono text-stone-600 hover:text-stone-400 mb-6 block"
+          >
+            ← Back
+          </button>
+          <h1 className="text-xl font-mono text-stone-200 mb-1 tracking-tight">Choose your role</h1>
+          <p className="text-xs font-mono text-stone-600 mb-8">Berlin. January–March 1933. The same crisis. Three very different vantage points.</p>
+
+          <div className="space-y-4">
+            {CHARACTERS.map((char) => (
+              <button
+                key={char.id}
+                onClick={() => startNewGame(char.id)}
+                disabled={isLoading}
+                className="w-full text-left border border-stone-700 hover:border-stone-500 rounded p-5 transition-colors disabled:opacity-50 group"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1">
+                    <p className="text-sm font-mono text-stone-200 group-hover:text-white transition-colors">{char.name}</p>
+                    <p className="text-xs font-mono text-stone-500 mb-2">{char.title}</p>
+                    <p className="text-xs font-mono text-amber-600 mb-2 italic">&ldquo;{char.tagline}&rdquo;</p>
+                    <p className="text-xs font-mono text-stone-400 leading-relaxed">{char.description}</p>
+                  </div>
+                  <div className="flex-shrink-0 text-right">
+                    <span className={`text-xs font-mono ${DIFFICULTY_COLOR[char.difficulty] ?? 'text-stone-500'}`}>
+                      {char.difficulty}
+                    </span>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {isLoading && (
+            <p className="mt-4 text-stone-500 font-mono text-xs text-center">Starting…</p>
+          )}
+          {error && (
+            <p className="mt-4 text-red-400 font-mono text-xs">{error}</p>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   // Welcome / menu screen
   if (!gameState) {
     return (
@@ -161,11 +223,11 @@ export default function Home() {
 
           <div className="space-y-3">
             <button
-              onClick={startNewGame}
+              onClick={() => setScreen('character_select')}
               disabled={isLoading}
               className="w-full py-3 bg-amber-900 hover:bg-amber-800 text-amber-100 font-mono text-sm rounded transition-colors disabled:opacity-50"
             >
-              {isLoading ? 'Starting…' : 'New Game'}
+              New Game
             </button>
             {hasSave && (
               <button
@@ -207,7 +269,7 @@ export default function Home() {
             Save
           </button>
           <button
-            onClick={() => { setGameState(null); setError(null); }}
+            onClick={() => { setGameState(null); setScreen('menu'); setError(null); }}
             className="text-xs font-mono text-stone-600 hover:text-stone-400 transition-colors"
           >
             Menu
@@ -235,6 +297,7 @@ export default function Home() {
               gameStatus={gameState.gameStatus}
               gameOverReason={gameOverReason}
               journal={gameState.journal}
+              player={gameState.player}
             />
           </div>
           {!isGameOver && (
@@ -245,12 +308,18 @@ export default function Home() {
             />
           )}
           {isGameOver && (
-            <div className="border-t border-stone-700 px-4 py-3 bg-stone-950 flex justify-center">
+            <div className="border-t border-stone-700 px-4 py-3 bg-stone-950 flex justify-center gap-3">
               <button
-                onClick={startNewGame}
+                onClick={() => { setGameState(null); setScreen('character_select'); }}
+                className="px-6 py-2 bg-amber-900 hover:bg-amber-800 text-amber-100 font-mono text-sm rounded"
+              >
+                New Game
+              </button>
+              <button
+                onClick={() => { setGameState(null); setScreen('menu'); setError(null); }}
                 className="px-6 py-2 bg-stone-800 hover:bg-stone-700 text-stone-300 font-mono text-sm rounded"
               >
-                Start Over
+                Menu
               </button>
             </div>
           )}
