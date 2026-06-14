@@ -1,4 +1,5 @@
 import { GameState } from './types';
+import type { Passage } from './localHistory';
 
 function getCharacterContext(state: GameState): string {
   const { characterType } = state.player;
@@ -42,11 +43,15 @@ The player is Karl Brandt, a journalist at the Berliner Tageblatt, trying to pre
 **Win condition**: The Enabling Act fails (naziConsolidationLevel below 40 when the vote happens) OR is delayed past April 1933.`;
 }
 
-export function buildSystemPrompt(state: GameState): string {
+export function buildSystemPrompt(state: GameState, passages: Passage[] = []): string {
   const worldJson = JSON.stringify(state.world, null, 2);
   const playerJson = JSON.stringify(state.player, null, 2);
   const recentJournal = state.journal.slice(-5);
   const characterContext = getCharacterContext(state);
+
+  const passageBlock = passages.length > 0
+    ? `\n## RELEVANT HISTORICAL SOURCES (from local archive)\n\nThe following passages from Wikipedia and Wikisource primary documents are relevant to the current action. Use them for specific names, dates, document texts, and verified facts:\n\n${passages.map(p => `[${p.title ?? p.article_id}]\n${p.content}`).join('\n\n---\n\n')}\n`
+    : '';
 
   return `You are the adjudicator for "Inside History," a historically grounded text game set in 1933. The player is trying to prevent the Nazi consolidation of power before the Enabling Act passes on March 23, 1933.
 
@@ -77,7 +82,7 @@ The pendingEvents array above contains the full Wikipedia-sourced timeline. Use 
 - If the current game date has passed a "historical_unless_prevented" event and the player hasn't intervened, apply its naziConsolidationEffect and mark triggered.
 - If the player's action directly prevents a preventable event, do NOT apply its naziConsolidationEffect and mark it triggered=true with a note in causalChain.
 - Reference the historicalNote and keyActors fields to make your narrative specific and grounded.
-
+${passageBlock}
 ## PLAYER STATE
 
 ${playerJson}

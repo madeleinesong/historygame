@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import { GameState, ActionResponse, Relationship } from '@/lib/types';
 import { buildSystemPrompt } from '@/lib/systemPrompt';
+import { searchPassages } from '@/lib/localHistory';
 
 function makeClient() {
   if (process.env.ANTHROPIC_API_KEY) {
@@ -74,7 +75,11 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Action is required' }, { status: 400 });
     }
 
-    const systemPrompt = buildSystemPrompt(gameState);
+    // Retrieve locally-stored historical passages relevant to this action + current date
+    const searchQuery = `${action} ${gameState.currentDateISO.slice(0, 7)} ${gameState.currentLocation}`;
+    const relevantPassages = searchPassages(searchQuery, 5);
+
+    const systemPrompt = buildSystemPrompt(gameState, relevantPassages);
 
     const requestParams: Parameters<typeof client.messages.stream>[0] = {
       model: MODEL,
