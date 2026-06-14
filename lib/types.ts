@@ -27,6 +27,11 @@ export interface WorldEvent {
   triggerCondition: string;
   scheduledDate: string;
   triggered: boolean;
+  // enriched at game-start via Wikipedia + LLM
+  naziConsolidationEffect?: number;  // positive = consolidation rises when triggered
+  preventable?: boolean;
+  keyActors?: string[];
+  historicalNote?: string;           // one sentence of sourced context
 }
 
 export type CharacterType = 'journalist' | 'centre_party_deputy' | 'chamberlain';

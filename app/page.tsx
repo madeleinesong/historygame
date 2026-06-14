@@ -80,6 +80,7 @@ export default function Home() {
   const [suggestedActions, setSuggestedActions] = useState<string[]>([]);
   const [gameOverReason, setGameOverReason] = useState<string | null>(null);
   const [hasSave, setHasSave] = useState(false);
+  const [startingMessage, setStartingMessage] = useState<string>('');
 
   useEffect(() => {
     setHasSave(!!localStorage.getItem(SAVE_KEY));
@@ -92,6 +93,11 @@ export default function Home() {
   async function startNewGame(characterType: CharacterType) {
     setIsLoading(true);
     setError(null);
+    setStartingMessage('Consulting the historical record…');
+    // Cycle through messages so the user knows something is happening
+    const msgs = ['Researching Berlin, January 1933…', 'Sourcing Wikipedia archives…', 'Constructing the timeline…', 'Placing the actors…'];
+    let idx = 0;
+    const ticker = setInterval(() => { setStartingMessage(msgs[idx++ % msgs.length]); }, 2500);
     try {
       const res = await fetch('/api/new-game', {
         method: 'POST',
@@ -109,6 +115,8 @@ export default function Home() {
       setError('Failed to start game.');
       console.error(e);
     } finally {
+      clearInterval(ticker);
+      setStartingMessage('');
       setIsLoading(false);
     }
   }
@@ -202,7 +210,9 @@ export default function Home() {
           </div>
 
           {isLoading && (
-            <p className="mt-4 text-stone-500 font-mono text-xs text-center">Starting…</p>
+            <p className="mt-6 text-stone-500 font-mono text-xs text-center animate-pulse">
+              {startingMessage || 'Starting…'}
+            </p>
           )}
           {error && (
             <p className="mt-4 text-red-400 font-mono text-xs">{error}</p>

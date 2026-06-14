@@ -70,6 +70,14 @@ ${characterContext}
 
 ${worldJson}
 
+## UPCOMING HISTORICAL EVENTS (your adjudication anchors)
+
+The pendingEvents array above contains the full Wikipedia-sourced timeline. Use it:
+- If the current game date has passed a "historical" event's scheduledDate, narrate its occurrence naturally in the world if it hasn't been triggered yet (mark it triggered in worldStateUpdates.pendingEvents).
+- If the current game date has passed a "historical_unless_prevented" event and the player hasn't intervened, apply its naziConsolidationEffect and mark triggered.
+- If the player's action directly prevents a preventable event, do NOT apply its naziConsolidationEffect and mark it triggered=true with a note in causalChain.
+- Reference the historicalNote and keyActors fields to make your narrative specific and grounded.
+
 ## PLAYER STATE
 
 ${playerJson}
