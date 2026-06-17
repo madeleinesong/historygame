@@ -2,31 +2,55 @@ import Anthropic from '@anthropic-ai/sdk';
 import { WorldEvent } from './types';
 import { searchPassages, isDbReady } from './localHistory';
 
-// Articles most useful for timeline generation
+// Articles most useful for timeline generation — covers full 1933-1945 arc
 const TIMELINE_ARTICLE_QUERIES = [
+  // 1933 crisis
   'Nazi seizure power 1933 January February March',
   'Reichstag fire February 1933 arson decree',
   'Enabling Act March 1933 vote Centre Party',
   'SA violence election campaign 1933',
   'Reichstag Fire Decree emergency powers arrests',
+  // 1933-1934 consolidation
+  'Night Long Knives 1934 Röhm purge Schleicher',
+  'Hindenburg death 1934 Hitler president oath Wehrmacht',
+  // 1935-1938 expansion
+  'Nuremberg Laws 1935 Jewish persecution citizenship',
+  'Rhineland remilitarisation 1936 Versailles violation',
+  'Anschluss 1938 Austria annexation',
+  'Munich Agreement 1938 Sudetenland Chamberlain appeasement',
+  'Kristallnacht 1938 pogrom Jewish businesses',
+  // 1939-1941
+  'invasion Poland 1939 world war begins',
+  'fall France 1940 armistice Vichy',
+  'Operation Barbarossa 1941 Soviet Union invasion',
+  // 1942-1945
+  'Wannsee Conference 1942 Final Solution Holocaust',
+  'Battle Stalingrad 1942 1943 turning point',
+  'July 20 plot 1944 Stauffenberg assassination attempt',
+  'German resistance Nazism opposition conspirators',
+  'V-E Day 1945 German surrender end war',
 ];
 
-const TIMELINE_PROMPT = `You are a historian specialising in Weimar Germany and the Nazi seizure of power. Using the primary and secondary sources below, generate a JSON array of all significant, datable events between January 30 and March 23, 1933 (inclusive).
+const TIMELINE_PROMPT = `You are a historian specialising in the Nazi regime and World War II. Using the primary and secondary sources below, generate a JSON array of all significant, datable events from January 30, 1933 through May 8, 1945 (inclusive).
 
 SOURCES:
 {SOURCES}
 
 Rules:
-- Include 30–40 events. Prefer events with a specific, verifiable date.
-- Cover the full arc: press decrees, SA violence, KPD persecution, election campaign, Reichstag fire, emergency decrees, diplomatic reactions, Centre Party negotiations, and the Enabling Act vote.
-- Use "historical_unless_prevented" for events an alert, well-connected person acting from inside Germany could plausibly have disrupted (e.g. the Reichstag fire arson, the arrest of a specific individual, the broadcast of a specific speech). Use "historical" for events that will happen regardless.
-- naziConsolidationEffect: integer −10 to +15. Large positive = Nazi power dramatically increases.
+- Include 60–80 events. Prefer events with a specific, verifiable date.
+- Cover the full arc across four phases:
+  PHASE 1 (Jan–Mar 1933): press decrees, SA violence, KPD persecution, election campaign, Reichstag fire, emergency decrees, Centre Party negotiations, Enabling Act vote.
+  PHASE 2 (Mar 1933–Aug 1934): Dachau opens, party bans, Night of Long Knives, Hindenburg's death, Wehrmacht oath.
+  PHASE 3 (Aug 1934–Sep 1939): Nuremberg Laws, remilitarisation of Rhineland, Anschluss, Munich Agreement, Kristallnacht, German rearmament.
+  PHASE 4 (Sep 1939–May 1945): invasion of Poland, fall of France, Barbarossa, Wannsee Conference, Stalingrad, July 20 plot, D-Day, fall of Berlin, V-E Day.
+- Use "historical_unless_prevented" for events a well-placed, determined person could plausibly have disrupted with advance knowledge. Use "historical" for events that will happen regardless.
+- naziConsolidationEffect: integer −15 to +25. Large positive = Nazi power dramatically increases. Negative = power weakens (Stalingrad, D-Day, etc.).
 
 Output ONLY a valid JSON array with no markdown fences. Each object must have exactly these fields:
 {
   "id": "snake_case_unique",
   "description": "1-2 sentence factual description with specific names and dates",
-  "scheduledDate": "1933-MM-DDTHH:mm:ss",
+  "scheduledDate": "YYYY-MM-DDTHH:mm:ss",
   "triggerCondition": "historical" | "historical_unless_prevented",
   "triggered": false,
   "preventable": true | false,

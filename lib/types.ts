@@ -48,8 +48,15 @@ export interface PlayerState {
   characterType: CharacterType;
 }
 
+export type GamePhase =
+  | 'nazi_consolidation'   // Jan 30 – Mar 23 1933: stop the Enabling Act
+  | 'weimar_collapse'      // Mar 1933 – Aug 1934: internal resistance; Night of Long Knives
+  | 'third_reich'          // Aug 1934 – Sep 1939: international pressure, rearmament, Munich
+  | 'wartime';             // Sep 1939 – May 1945: resistance networks, shorten the war
+
 export interface WorldState {
   naziConsolidationLevel: number;
+  gamePhase: GamePhase;
   keyActorStates: Record<string, ActorState>;
   pendingEvents: WorldEvent[];
   triggeredEvents: string[];

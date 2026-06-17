@@ -87,6 +87,94 @@ const ARTICLES: ArticleSpec[] = [
   { id: 'ws_fire_decree', title: 'Reichstag Fire Decree', source: 'wikisource', category: 'primary' },
   { id: 'ws_wels_speech', title: 'Speech Against the Enabling Act (Wels)', source: 'wikisource', category: 'primary' },
   { id: 'ws_protection_decree', title: 'Decree for the Protection of the German People', source: 'wikisource', category: 'primary' },
+
+  // ── WW2 expansion articles ─────────────────────────────────────────────────
+
+  // German domestic consolidation (post-1933)
+  { id: 'night_long_knives', title: 'Night of the Long Knives', source: 'wikipedia', category: 'event' },
+  { id: 'gleichschaltung', title: 'Gleichschaltung', source: 'wikipedia', category: 'event' },
+  { id: 'nuremberg_laws', title: 'Nuremberg Laws', source: 'wikipedia', category: 'event' },
+  { id: 'kristallnacht', title: 'Kristallnacht', source: 'wikipedia', category: 'event' },
+  { id: 'four_year_plan', title: 'Four Year Plan', source: 'wikipedia', category: 'event' },
+  { id: 'german_rearmament', title: 'German re-armament', source: 'wikipedia', category: 'event' },
+
+  // Resistance
+  { id: 'german_resistance', title: 'German resistance to Nazism', source: 'wikipedia', category: 'event' },
+  { id: 'july_20_plot', title: '20 July plot', source: 'wikipedia', category: 'event' },
+  { id: 'stauffenberg', title: 'Claus von Stauffenberg', source: 'wikipedia', category: 'person' },
+  { id: 'canaris', title: 'Wilhelm Canaris', source: 'wikipedia', category: 'person' },
+  { id: 'white_rose', title: 'White Rose', source: 'wikipedia', category: 'event' },
+  { id: 'bonhoeffer', title: 'Dietrich Bonhoeffer', source: 'wikipedia', category: 'person' },
+  { id: 'sophie_scholl', title: 'Sophie Scholl', source: 'wikipedia', category: 'person' },
+  { id: 'kreisau_circle', title: 'Kreisau Circle', source: 'wikipedia', category: 'org' },
+  { id: 'confessing_church', title: 'Confessing Church', source: 'wikipedia', category: 'org' },
+  { id: 'adam_trott', title: 'Adam von Trott zu Solz', source: 'wikipedia', category: 'person' },
+  { id: 'beck_general', title: 'Ludwig Beck', source: 'wikipedia', category: 'person' },
+  { id: 'abwehr', title: 'Abwehr', source: 'wikipedia', category: 'org' },
+
+  // Holocaust
+  { id: 'holocaust', title: 'The Holocaust', source: 'wikipedia', category: 'event' },
+  { id: 'wannsee_conference', title: 'Wannsee Conference', source: 'wikipedia', category: 'event' },
+  { id: 'auschwitz', title: 'Auschwitz concentration camp', source: 'wikipedia', category: 'place' },
+  { id: 'dachau', title: 'Dachau concentration camp', source: 'wikipedia', category: 'place' },
+  { id: 'nuremberg_trials', title: 'Nuremberg trials', source: 'wikipedia', category: 'event' },
+
+  // Nazi hierarchy (key WW2 figures not yet seeded)
+  { id: 'heydrich', title: 'Reinhard Heydrich', source: 'wikipedia', category: 'person' },
+  { id: 'eichmann', title: 'Adolf Eichmann', source: 'wikipedia', category: 'person' },
+  { id: 'speer', title: 'Albert Speer', source: 'wikipedia', category: 'person' },
+  { id: 'ribbentrop', title: 'Joachim von Ribbentrop', source: 'wikipedia', category: 'person' },
+
+  // Diplomatic events
+  { id: 'munich_agreement', title: 'Munich Agreement', source: 'wikipedia', category: 'event' },
+  { id: 'molotov_ribbentrop', title: 'Molotov–Ribbentrop Pact', source: 'wikipedia', category: 'event' },
+  { id: 'anschluss', title: 'Anschluss', source: 'wikipedia', category: 'event' },
+  { id: 'appeasement', title: 'Appeasement', source: 'wikipedia', category: 'event' },
+  { id: 'anti_comintern', title: 'Anti-Comintern Pact', source: 'wikipedia', category: 'event' },
+  { id: 'axis_powers', title: 'Axis powers', source: 'wikipedia', category: 'org' },
+  { id: 'atlantic_charter', title: 'Atlantic Charter', source: 'wikipedia', category: 'event' },
+  { id: 'yalta_conference', title: 'Yalta Conference', source: 'wikipedia', category: 'event' },
+  { id: 'league_nations', title: 'League of Nations', source: 'wikipedia', category: 'org' },
+
+  // Military events
+  { id: 'invasion_poland', title: 'Invasion of Poland', source: 'wikipedia', category: 'event' },
+  { id: 'phoney_war', title: 'Phoney War', source: 'wikipedia', category: 'event' },
+  { id: 'battle_france', title: 'Battle of France', source: 'wikipedia', category: 'event' },
+  { id: 'battle_britain', title: 'Battle of Britain', source: 'wikipedia', category: 'event' },
+  { id: 'the_blitz', title: 'The Blitz', source: 'wikipedia', category: 'event' },
+  { id: 'operation_barbarossa', title: 'Operation Barbarossa', source: 'wikipedia', category: 'event' },
+  { id: 'siege_leningrad', title: 'Siege of Leningrad', source: 'wikipedia', category: 'event' },
+  { id: 'battle_stalingrad', title: 'Battle of Stalingrad', source: 'wikipedia', category: 'event' },
+  { id: 'battle_kursk', title: 'Battle of Kursk', source: 'wikipedia', category: 'event' },
+  { id: 'operation_overlord', title: 'Operation Overlord', source: 'wikipedia', category: 'event' },
+  { id: 'battle_bulge', title: 'Battle of the Bulge', source: 'wikipedia', category: 'event' },
+  { id: 'battle_berlin', title: 'Battle of Berlin', source: 'wikipedia', category: 'event' },
+  { id: 've_day', title: 'Victory in Europe Day', source: 'wikipedia', category: 'event' },
+  { id: 'blitzkrieg', title: 'Blitzkrieg', source: 'wikipedia', category: 'event' },
+  { id: 'battle_atlantic', title: 'Battle of the Atlantic', source: 'wikipedia', category: 'event' },
+  { id: 'strategic_bombing', title: 'Strategic bombing during World War II', source: 'wikipedia', category: 'event' },
+  { id: 'spanish_civil_war', title: 'Spanish Civil War', source: 'wikipedia', category: 'event' },
+
+  // Allied leaders
+  { id: 'churchill', title: 'Winston Churchill', source: 'wikipedia', category: 'person' },
+  { id: 'roosevelt_fdr', title: 'Franklin D. Roosevelt', source: 'wikipedia', category: 'person' },
+  { id: 'stalin', title: 'Joseph Stalin', source: 'wikipedia', category: 'person' },
+  { id: 'de_gaulle', title: 'Charles de Gaulle', source: 'wikipedia', category: 'person' },
+  { id: 'eisenhower', title: 'Dwight D. Eisenhower', source: 'wikipedia', category: 'person' },
+
+  // German military figures
+  { id: 'rommel', title: 'Erwin Rommel', source: 'wikipedia', category: 'person' },
+  { id: 'guderian', title: 'Heinz Guderian', source: 'wikipedia', category: 'person' },
+
+  // German military organizations
+  { id: 'Wehrmacht', title: 'Wehrmacht', source: 'wikipedia', category: 'org' },
+  { id: 'waffen_ss', title: 'Waffen-SS', source: 'wikipedia', category: 'org' },
+  { id: 'luftwaffe', title: 'Luftwaffe', source: 'wikipedia', category: 'org' },
+  { id: 'kriegsmarine', title: 'Kriegsmarine', source: 'wikipedia', category: 'org' },
+
+  // Context
+  { id: 'berlin_ww2', title: 'Berlin during World War II', source: 'wikipedia', category: 'place' },
+  { id: 'german_home_front', title: 'German home front during World War II', source: 'wikipedia', category: 'event' },
 ];
 
 // ─── Fetch helpers ─────────────────────────────────────────────────────────────
